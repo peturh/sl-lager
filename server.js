@@ -1,7 +1,11 @@
 const express = require('express');
 const serveStatic = require('serve-static');
 const request = require('request');
+const bodyParser = require('body-parser');
+
 const app = express();
+app.use(bodyParser.json());
+
 const username = process.env.username || "petur";
 const password = process.env.password || "petur";
 const url = process.env.url || "";

@@ -13,8 +13,8 @@ module.exports = {
     },
     addDepot : function(depot,callback){
 
-        var depot = new depot(depot);
-        depot.save(function(err){
+        var newDepot = new depot(depot);
+        newDepot.save(function(err){
             if(err){
                 return err;
             }
@@ -22,6 +22,11 @@ module.exports = {
                 callback();
             }
         });
+    },
+    addItemToDepot : function(item,depotId,callback){
+        depot.findOneAndUpdate({id:depotId},{},function(){
+            console.log("hej")
+        })
     },
     getDepot : function(id,callback){
         depot.find({id:id},function(err,depot){

@@ -28,6 +28,7 @@ var MainTemplate = require('main.html');
 var ToolbarTemplate = require('toolbar.html');
 var MenuTemplates = require('menu.html');
 var DepotTemplate = require('depot.html');
+var AddItem = require('addItem.html');
 
 
 var materialcss = require('angular-material/angular-material.min.css');

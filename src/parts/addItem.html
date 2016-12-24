@@ -1,0 +1,75 @@
+<md-dialog aria-label="Add new item to depot" ng-init="init()" ng-cloak md-padding>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add item to depot</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="Close dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <md-card class="md-dialog-content">
+                <h3>Add item from list</h3>
+                <md-list>
+                    <md-subheader class="md-no-sticky">Existing items</md-subheader>
+                    <div ng-repeat="item in depot.items">
+                        <md-list-item class="md-2-line" ng-click="selectScreen(screen.id)">
+                            <md-icon md-font-set="fa fa-2x">&#xf26c</md-icon>
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{screen.description}}</h3>
+                                <h4>{{screen.id}}</h4>
+                            </div>
+                        </md-list-item>
+                    </div>
+                    <md-input-container>
+                        <label>Quantity</label>
+                        <input type="number" ng-model="addItem.amount">
+                    </md-input-container>
+                </md-list>
+                <div layout="row" layout-align="end center">
+
+                    <md-button class="md-primary md-raised">
+                        Add item
+                    </md-button>
+                </div>
+            </md-card>
+
+            <md-card class="md-dialog-content">
+                <h3>Create new item</h3>
+                <div>
+                    <md-input-container>
+                        <label>Name</label>
+                        <input type="text" ng-model="item.name" required>
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-input-container>
+                        <label>Description</label>
+                        <input type="text" ng-model="item.description">
+                    </md-input-container>
+                    <div>
+                        <md-input-container>
+                            <md-select ng-model="item.category" placeholder="Category" class="md-no-underline">
+                                <md-option value="water">Water</md-option>
+                                <md-option value="juice">Juice</md-option>
+                                <md-option value="milk">Milk</md-option>
+                                <md-option value="wine">Wine</md-option>
+                                <md-option value="mead">Mead</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row" layout-align="end center">
+                    <md-button ng-click="addNewItem(true)" title="Add this item and this dialog closes" class="md-raised">
+                        Add item
+                    </md-button>
+                    <md-button ng-click="addNewItem(false)" title="Adds the item, but lets you continue adding items" class="md-primary md-raised">
+                        Add more
+                    </md-button>
+                </div>
+            </md-card>
+        </md-dialog-content>
+    </form>
+</md-dialog>

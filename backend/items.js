@@ -1,5 +1,5 @@
 var models = require('./models.js');
-var item = models.getItemModel();
+var items = models.getItemModel();
 module.exports = {
     getItems : function(){
         item.find({},null,function(err,depots){
@@ -22,9 +22,9 @@ module.exports = {
         })
     },
     addItem : function(item){
-
-        var item = new depot(item)
-        item.save(function(err){
+        console.log(item)
+        var newItem = new items(item.item);
+        newItem.save(function(err){
             if(err){
                 return err;
             }

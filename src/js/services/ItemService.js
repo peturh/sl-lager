@@ -43,5 +43,42 @@ app.service('ItemService', ['$http', function ($http) {
             });
     };
 
+    service.addNewItemToDepot = function (item,depotId) {
+        var payload = {
+            item : item,
+            depotId : depotId
+        };
+        return $http(
+            {
+                method: 'POST',
+                data: payload,
+                url: "/addNewItemToDepot"
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
+    service.addExistingItemToDepot = function (item) {
+        console.log(item);
+        return $http(
+            {
+                method: 'POST',
+                data: item,
+                url: "/addExistingItemToDepot/"
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
+
+
     return service;
 }]);
