@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+
+    <base href="localhost">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>SL - Lager</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+</head>
+<body ng-app="app">
+<div ng-controller="MainController as main" ng-cloak layout="column">
+
+    <div layout="vertical" layout-fill>
+        <ng-include  src="'menu.html'" layout="vertical"></ng-include>
+
+        <md-content class="toolbar-margin" flex>
+            <div ng-include="'toolbar.html'"></div>
+            <md-progress-linear class="md-accent sm-progress-bar" ng-disabled="!main.showloading" md-mode="indeterminate"></md-progress-linear>
+
+            <div ui-view></div>
+        </md-content>
+        </section>
+    </div>
+</div>
+
+</body>
+<script src="bundle.js"></script>
+
+</html>

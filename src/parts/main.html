@@ -1,0 +1,34 @@
+<div layout="column">
+    <div layout="column" layout-gt-md="row" ng-init="main.init()">
+        <!-- Card with sites available -->
+        <md-card flex-gt-md="100">
+            <md-toolbar class="layout-padding">
+                <div class="md-toolbar-tools">
+                    <md-icon md-font-set="fa">&#xf041</md-icon>
+                    <h2 class="layout-padding"><span>Choose Depot</span></h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+            <md-card-content>
+                <md-list>
+                    <md-list-item ng-click="main.selectDepot(depot.id)" class="md-3-line"
+                                  ng-repeat="depot in main.depots">
+                        <md-icon class="md-avatar" md-font-icon>near_me</md-icon>
+                        <div class="md-list-item-text" layout="column">
+                            <p>Name: <b>{{depot.name}}</b></p>
+                            <p>Location: <b>{{depot.location}}</b></p>
+                            <p>Id: <b>{{depot.id}}</b></p>
+                        </div>
+                        <md-divider></md-divider>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-icon-button" title="Add new depot" aria-label="Add new depot">
+                    <md-icon ng-class="md-48" md-font-icon>add_circle</md-icon>
+                </md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
+</div>
