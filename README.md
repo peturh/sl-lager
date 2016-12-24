@@ -1,5 +1,4 @@
-# avhs-test
-A little test project for avhs
+# SL Lager hantering
 
 ## Dependencies 
 
