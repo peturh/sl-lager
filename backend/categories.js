@@ -1,13 +1,13 @@
 var models = require('./models.js');
 var category = models.getProductCategoryModel();
 module.exports = {
-    getProductCategories : function(){
+    getProductCategories : function(callback){
         category.find({},null,function(err,categories){
             if(err){
                 return err;
             }
             else {
-                return categories;
+                return callback(categories);
             }
         })
     },

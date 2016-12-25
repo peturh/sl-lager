@@ -21,4 +21,10 @@ app.controller('MainController', ['$scope', 'DepotService','$mdSidenav','$state'
             $state.go('depot',{id : id});
         };
 
+        main.openLink = function(link){
+            $state.go(link);
+            $mdSidenav("left").toggle();
+
+        };
+
     }]);

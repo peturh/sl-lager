@@ -12,7 +12,7 @@ app.service('ItemService', ['$http', function ($http) {
         return $http(
             {
                 method: 'GET',
-                url: "/depots"
+                url: "/items"
             })
             .success(function (data, status) {
                 return data;

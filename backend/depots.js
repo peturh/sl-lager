@@ -31,23 +31,18 @@ module.exports = {
                 quantity: quantity
             }]
         };
-
-        depot.update({id: depotId}, {$push: {itemsAndQuantity: {
-            item: item,
-            quantity: quantity,
-            history: [{
-                quantity: quantity
-            }]
-        }}},function (err, depot) {
-            if (err) {
-                console.log("error");
-                callback(err);
-            }
-            else {
-                console.log("success", depot);
-                callback(depot);
-            }
-        })
+        console.log(itemsAndQuantity);
+        depot.update({id: depotId}, {$push: {"itemsAndQuantity": itemsAndQuantity}}, {safe: true, upsert: true},
+            function (err, depot) {
+                if (err) {
+                    console.log("error");
+                    callback(err);
+                }
+                else {
+                    console.log("success", depot);
+                    callback(depot);
+                }
+            },    {strict: false})
     },
     getDepot: function (id, callback) {
         depot.find({id: id}, function (err, depot) {

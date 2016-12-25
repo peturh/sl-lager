@@ -1,18 +1,18 @@
 var models = require('./models.js');
 var items = models.getItemModel();
 module.exports = {
-    getItems : function(){
-        item.find({},null,function(err,depots){
+    getItems : function(callback){
+        items.find({},null,function(err,items){
             if(err){
-                return err;
+                return callback(err);
             }
             else {
-                return depots;
+                return callback(items);
             }
         })
     },
     getItemsFromDepot : function(){
-        item.find({},null,function(err,depots){
+        items.find({},null,function(err,depots){
             if(err){
                 return err;
             }

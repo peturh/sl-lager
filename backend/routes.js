@@ -1,5 +1,6 @@
 var depots = require('./depots');
 var items = require('./items');
+var categories = require('./categories');
 
 module.exports = function (app) {
 
@@ -38,12 +39,18 @@ module.exports = function (app) {
      * Gets all items
      */
     app.get('/items', function (req, res) {
-
+        items.getItems(function(items){
+            res.send(items);
+            res.end();
+        })
 
     });
 
     app.get('/productCategories', function (req, res) {
-
+        categories.getProductCategories(function(categories){
+            res.send(categories);
+            res.end();
+        })
     });
 
 
@@ -51,16 +58,13 @@ module.exports = function (app) {
      * Creates new item
      */
     app.post('/addNewItemToDepot', function (req, res) {
-        console.log("HAHAHA")
         var item = req.body.item;
         var depotId = req.body.depotId;
-        console.log("depot",depotId);
-        console.log("item",item);
-
         var quantity = req.body.item.quantity;
+
         items.addItem(req.body,function(){
             depots.addItemToDepot(item,quantity,depotId,function(item){
-                console.log("hehe",item);
+                console.log("The item added to depot: ",item);
             })
         });
 

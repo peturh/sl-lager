@@ -23,5 +23,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'DepotController',
             controllerAs: 'depot'
         })
+        .state('items', {
+            url: '/items/',
+            templateUrl: 'item.html',
+            controller: 'ItemController',
+            controllerAs: 'item'
+        })
+        .state('categories', {
+            url: '/categories/',
+            templateUrl: 'category.html',
+            controller: 'CategoryController',
+            controllerAs: 'category'
+        })
 
 }]);

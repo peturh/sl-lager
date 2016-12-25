@@ -26,7 +26,7 @@ var depotSchema = new Schema({
     location: String,
     id: String,
     itemsAndQuantity: []
-});
+},{ strict: false });
 
 var companySchema = new Schema({
     name: String,
@@ -35,8 +35,8 @@ var companySchema = new Schema({
 });
 
 var itemModel = mongoose.model('items', itemSchema);
-var depotModel = mongoose.model('depots', productCategorySchema);
-var productCategoryModel = mongoose.model('productCategories', depotSchema);
+var depotModel = mongoose.model('depots', depotSchema);
+var productCategoryModel = mongoose.model('productCategories', productCategorySchema);
 var companyModel = mongoose.model('companies', companySchema);
 
 module.exports = {

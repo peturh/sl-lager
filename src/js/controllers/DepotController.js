@@ -66,12 +66,12 @@ function DialogController($scope, $mdDialog, ItemService, $stateParams) {
                 $mdDialog.hide();
             }
             else {
-                /*$scope.item = {
+                $scope.item = {
                     name: "",
                     description: "",
                     category: "",
                     quantity : ""
-                };*/
+                };
             }
         })
     };

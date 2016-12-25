@@ -14,13 +14,16 @@ var theme = require('configs/themes');
 // Controllers
 var MainController = require('controllers/MainController');
 var DepotController = require('controllers/DepotController');
-
+var ItemController = require('controllers/ItemController');
+var CategoryController = require('controllers/CategoryController');
 // Directives
 
 //Services3
 var APIService = require('services/APIService');
 var DepotService = require('services/DepotService');
 var ItemService = require('services/ItemService');
+var CategoryService = require('services/CategoryService');
+
 
 // Templates
 
@@ -29,7 +32,8 @@ var ToolbarTemplate = require('toolbar.html');
 var MenuTemplates = require('menu.html');
 var DepotTemplate = require('depot.html');
 var AddItem = require('addItem.html');
-
+var CategoryTemplate = require('category.html');
+var ItemTemplate = require('item.html');
 
 var materialcss = require('angular-material/angular-material.min.css');
 var stylesheetsLess = require('stylesheets.less');
