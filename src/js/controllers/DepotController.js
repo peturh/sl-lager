@@ -41,7 +41,8 @@ function DialogController($scope, $mdDialog, ItemService, $stateParams) {
     $scope.item = {
         name: "",
         description: "",
-        category: ""
+        category: "",
+        quantity : ""
     };
 
     $scope.init = function () {
@@ -60,16 +61,17 @@ function DialogController($scope, $mdDialog, ItemService, $stateParams) {
         })
     };
     $scope.addNewItem = function (close) {
-        ItemService.addNewItemToDepot($scope.item).then(function () {
+        ItemService.addNewItemToDepot($scope.item,$stateParams.id).then(function () {
             if (close) {
                 $mdDialog.hide();
             }
             else {
-                $scope.item = {
+                /*$scope.item = {
                     name: "",
                     description: "",
-                    category: ""
-                };
+                    category: "",
+                    quantity : ""
+                };*/
             }
         })
     };

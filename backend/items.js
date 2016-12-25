@@ -21,7 +21,7 @@ module.exports = {
             }
         })
     },
-    addItem : function(item){
+    addItem : function(item,callback){
         console.log(item)
         var newItem = new items(item.item);
         newItem.save(function(err){
@@ -29,7 +29,7 @@ module.exports = {
                 return err;
             }
             else{
-
+                callback();
             }
         });
     },

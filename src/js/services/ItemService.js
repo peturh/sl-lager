@@ -48,6 +48,7 @@ app.service('ItemService', ['$http', function ($http) {
             item : item,
             depotId : depotId
         };
+        console.log(payload)
         return $http(
             {
                 method: 'POST',

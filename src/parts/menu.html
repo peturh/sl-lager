@@ -10,28 +10,13 @@
                      flex
                      ng-click="main.openLink('depots')">
                     <div class="inset">
-                        <md-icon md-font-icon="material-icons">screen_share</md-icon>
+                        <md-icon md-font-icon="material-icons">place</md-icon>
                     </div>
                     <div class="inset">Change depot</div>
                     <md-divider></md-divider>
                 </div>
             </md-list-item>
-<md-divider></md-divider>
-            <md-list-item md-ink-ripple ui-sref-active='active-menu-link'>
-                <div class="menu-item"
-                     layout="row"
-                     layout-align="start center"
-                     flex
-                     ng-click="main.openLink('categories')">
-                    <div class="inset">
-                        <md-icon md-font-icon="material-icons">screen_share</md-icon>
-                    </div>
-                    <div class="inset">See categories</div>
-                    <md-divider></md-divider>
-                </div>
-            </md-list-item>
             <md-divider></md-divider>
-
             <md-list-item md-ink-ripple ui-sref-active='active-menu-link'>
                 <div class="menu-item"
                      layout="row"
@@ -39,11 +24,26 @@
                      flex
                      ng-click="main.openLink('items')">
                     <div class="inset">
-                        <md-icon md-font-icon="material-icons">screen_share</md-icon>
+                        <md-icon md-font-icon="material-icons">radio_button_checked</md-icon>
                     </div>
                     <div class="inset">See all items</div>
                     <md-divider></md-divider>
                 </div>
             </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item md-ink-ripple ui-sref-active='active-menu-link'>
+                <div class="menu-item"
+                     layout="row"
+                     layout-align="start center"
+                     flex
+                     ng-click="main.openLink('categories')">
+                    <div class="inset">
+                        <md-icon md-font-icon="material-icons">group_work</md-icon>
+                    </div>
+                    <div class="inset">See categories</div>
+                    <md-divider></md-divider>
+                </div>
+            </md-list-item>
+            <md-divider></md-divider>
         </md-list>
 </md-sidenav>

@@ -1,9 +1,10 @@
 var models = require('./models.js');
 var depot = models.getDepotModel();
+
 module.exports = {
-    getDepots : function(callback){
-        depot.find({},{itemsAndQuantity:0},function(err,depots){
-            if(err){
+    getDepots: function (callback) {
+        depot.find({}, {itemsAndQuantity: 0}, function (err, depots) {
+            if (err) {
                 return err;
             }
             else {
@@ -11,32 +12,51 @@ module.exports = {
             }
         })
     },
-    addDepot : function(depot,callback){
-
+    addDepot: function (depot, callback) {
         var newDepot = new depot(depot);
-        newDepot.save(function(err){
-            if(err){
+        newDepot.save(function (err) {
+            if (err) {
                 return err;
             }
-            else{
+            else {
                 callback();
             }
         });
     },
-    addItemToDepot : function(item,depotId,callback){
-        depot.findOneAndUpdate({id:depotId},{},function(){
-            console.log("hej")
+    addItemToDepot: function (item, quantity, depotId, callback) {
+        var itemsAndQuantity = {
+            item: item,
+            quantity: quantity,
+            history: [{
+                quantity: quantity
+            }]
+        };
+
+        depot.update({id: depotId}, {$push: {itemsAndQuantity: {
+            item: item,
+            quantity: quantity,
+            history: [{
+                quantity: quantity
+            }]
+        }}},function (err, depot) {
+            if (err) {
+                console.log("error");
+                callback(err);
+            }
+            else {
+                console.log("success", depot);
+                callback(depot);
+            }
         })
     },
-    getDepot : function(id,callback){
-        depot.find({id:id},function(err,depot){
-            if(err){
+    getDepot: function (id, callback) {
+        depot.find({id: id}, function (err, depot) {
+            if (err) {
                 return callback(err);
             }
-            else{
+            else {
                 return callback(depot);
             }
         })
-
     }
-}
+};

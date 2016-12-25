@@ -37,38 +37,49 @@
             </md-card>
 
             <md-card class="md-dialog-content">
-                <h3>Create new item</h3>
-                <div>
-                    <md-input-container>
-                        <label>Name</label>
-                        <input type="text" ng-model="item.name" required>
-                    </md-input-container>
-                </div>
-                <div>
-                    <md-input-container>
-                        <label>Description</label>
-                        <input type="text" ng-model="item.description">
-                    </md-input-container>
+                <form name="newItemForm" novalidate>
+                    <h3>Create new item</h3>
                     <div>
                         <md-input-container>
-                            <md-select ng-model="item.category" placeholder="Category" class="md-no-underline">
-                                <md-option value="water">Water</md-option>
-                                <md-option value="juice">Juice</md-option>
-                                <md-option value="milk">Milk</md-option>
-                                <md-option value="wine">Wine</md-option>
-                                <md-option value="mead">Mead</md-option>
-                            </md-select>
+                            <label>Name</label>
+                            <input type="text" ng-model="item.name" required>
                         </md-input-container>
                     </div>
-                </div>
-                <div layout="row" layout-align="end center">
-                    <md-button ng-click="addNewItem(true)" title="Add this item and this dialog closes" class="md-raised">
-                        Add item
-                    </md-button>
-                    <md-button ng-click="addNewItem(false)" title="Adds the item, but lets you continue adding items" class="md-primary md-raised">
-                        Add more
-                    </md-button>
-                </div>
+                    <div>
+                        <md-input-container>
+                            <label>Description</label>
+                            <input type="text" ng-model="item.description">
+                        </md-input-container>
+                        <div>
+                            <md-input-container>
+                                <label>Quantity</label>
+                                <input type="number" ng-model="item.quantity" required>
+                            </md-input-container>
+                        </div>
+                        <div>
+                            <md-input-container>
+                                <md-select ng-model="item.category" placeholder="Category" class="md-no-underline">
+                                    <md-option value="water">Water</md-option>
+                                    <md-option value="juice">Juice</md-option>
+                                    <md-option value="milk">Milk</md-option>
+                                    <md-option value="wine">Wine</md-option>
+                                    <md-option value="mead">Mead</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div layout="row" layout-align="end center">
+                        <md-button ng-click="addNewItem(true)" title="Add this item and this dialog closes"
+                                   class="md-raised" ng-disabled="newItemForm.$invalid">
+                            Add item
+                        </md-button>
+                        <md-button ng-click="addNewItem(false)"
+                                   title="Adds the item, but lets you continue adding items"
+                                   class="md-primary md-raised" ng-disabled="item.$invalid">
+                            Add more
+                        </md-button>
+                    </div>
+                </form>
             </md-card>
         </md-dialog-content>
     </form>

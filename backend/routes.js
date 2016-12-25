@@ -51,13 +51,16 @@ module.exports = function (app) {
      * Creates new item
      */
     app.post('/addNewItemToDepot', function (req, res) {
+        console.log("HAHAHA")
         var item = req.body.item;
         var depotId = req.body.depotId;
+        console.log("depot",depotId);
+        console.log("item",item);
 
-        items.addItem(req.body,function(item){
-            console.log(item);
-            depots.addItemToDepot(item,function(){
-                console.log("hehe");
+        var quantity = req.body.item.quantity;
+        items.addItem(req.body,function(){
+            depots.addItemToDepot(item,quantity,depotId,function(item){
+                console.log("hehe",item);
             })
         });
 

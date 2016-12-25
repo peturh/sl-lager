@@ -25,14 +25,7 @@ var depotSchema = new Schema({
     name: String,
     location: String,
     id: String,
-    itemsAndQuantity: [{
-        item: itemSchema,
-        quantity: Number,
-        history: {
-            quantity: String,
-            date: {type: Date}
-        }
-    }]
+    itemsAndQuantity: []
 });
 
 var companySchema = new Schema({
