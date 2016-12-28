@@ -1,7 +1,7 @@
 var app = require('app');
 
-app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemService', '$stateParams', '$mdDialog', '$mdMedia','MessageService',
-    function ($scope, $state, DepotService, ItemService, $stateParams, $mdDialog, $mdMedia,MessageService) {
+app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemService', '$stateParams', '$mdDialog', '$mdMedia', 'MessageService',
+    function ($scope, $state, DepotService, ItemService, $stateParams, $mdDialog, $mdMedia, MessageService) {
         var depot = this;
 
         /**
@@ -18,12 +18,12 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
             console.log(depot.selectedItem);
         };
 
-        depot.updateTotalQuantity = function(){
+        depot.updateTotalQuantity = function () {
             depot.selectedItem.item.quantity = depot.originalTotalQuantity - (depot.originalDepotQuantity - depot.selectedItem.depotQuantity);
         };
 
-        depot.saveUpdatedItem = function(){
-            DepotService.updateItemInDepot(depot.selectedItem,$stateParams.id).then(function(){
+        depot.saveUpdatedItem = function () {
+            DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
                 MessageService.showToastMessage('Successfully saved updated item.');
                 updateView();
             });
@@ -46,7 +46,7 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
 
         };
 
-        function updateView(){
+        function updateView() {
             DepotService.getDepot($stateParams.id).then(function (response) {
                 depot.depot = response.data[0];
             })
@@ -62,10 +62,12 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
         category: "",
         quantity: ""
     };
+    $scope.selectedItem = "";
+    $scope.quantity = 0;
 
     $scope.init = function () {
-        DepotService.getDepot($stateParams.id).then(function(response){
-           $scope.items = response.data;
+        ItemService.getItems().then(function (response) {
+            $scope.items = response.data;
         });
     };
 
@@ -77,11 +79,22 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
         $mdDialog.cancel();
     };
 
-    $scope.addExistingItem = function () {
+    $scope.selectItem = function (item) {
+        $scope.selectedItem = item;
+    };
+
+    $scope.addExistingItem = function (item, quantity, close) {
         ItemService.addExistingItemToDepot($scope.item, $stateParams.id).then(function () {
-            $mdDialog.hide();
+            if (close) {
+                $mdDialog.hide();
+            }
+            else {
+                $scope.selectedItem = "";
+                $scope.quantity = 0;
+            }
         })
     };
+
     $scope.addNewItem = function (close) {
         ItemService.addNewItemToDepot($scope.item, $stateParams.id).then(function () {
             if (close) {

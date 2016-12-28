@@ -1,65 +1,73 @@
 <md-dialog aria-label="Add new item to depot" ng-init="init()" ng-cloak md-padding>
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2>Add item to depot</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon aria-label="Close dialog">close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content>
-            <md-card class="md-dialog-content">
-                <form name="newItemForm" novalidate>
-                    <h3>Create new item</h3>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Add item to depot</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon aria-label="Close dialog">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-card class="md-dialog-content">
+            <form name="newItemForm" novalidate>
+                <h3>Create new item</h3>
+                <div>
+                    <md-input-container>
+                        <label>Name</label>
+                        <input type="text" ng-model="item.name" required>
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-input-container>
+                        <label>Description</label>
+                        <input type="text" ng-model="item.description">
+                    </md-input-container>
                     <div>
                         <md-input-container>
-                            <label>Name</label>
-                            <input type="text" ng-model="item.name" required>
+                            <label>Quantity</label>
+                            <input type="number" ng-model="item.quantity" required>
                         </md-input-container>
                     </div>
                     <div>
                         <md-input-container>
-                            <label>Description</label>
-                            <input type="text" ng-model="item.description">
+                            <md-select ng-model="item.category" placeholder="Category" class="md-no-underline">
+                                <md-option value="water">Water</md-option>
+                                <md-option value="juice">Juice</md-option>
+                                <md-option value="milk">Milk</md-option>
+                                <md-option value="wine">Wine</md-option>
+                                <md-option value="mead">Mead</md-option>
+                            </md-select>
                         </md-input-container>
-                        <div>
-                            <md-input-container>
-                                <label>Quantity</label>
-                                <input type="number" ng-model="item.quantity" required>
-                            </md-input-container>
-                        </div>
-                        <div>
-                            <md-input-container>
-                                <md-select ng-model="item.category" placeholder="Category" class="md-no-underline">
-                                    <md-option value="water">Water</md-option>
-                                    <md-option value="juice">Juice</md-option>
-                                    <md-option value="milk">Milk</md-option>
-                                    <md-option value="wine">Wine</md-option>
-                                    <md-option value="mead">Mead</md-option>
-                                </md-select>
-                            </md-input-container>
-                        </div>
                     </div>
-                    <div layout="row" layout-align="end center">
-                        <md-button ng-click="addNewItem(true)" title="Add this item and this dialog closes"
-                                   class="md-raised" ng-disabled="newItemForm.$invalid">
-                            Add item
-                        </md-button>
-                        <md-button ng-click="addNewItem(false)"
-                                   title="Adds the item, but lets you continue adding items"
-                                   class="md-primary md-raised" ng-disabled="newItemForm.$invalid">
-                            Add more
-                        </md-button>
-                    </div>
-                </form>
-            </md-card>
-            <md-card class="md-dialog-content">
-                <h3>Add item from list</h3>
-                <md-list>
+                </div>
+                <div layout="row" layout-align="end center">
+                    <md-button ng-click="addNewItem(true)" title="Add this item and this dialog closes"
+                               class="md-raised" ng-disabled="newItemForm.$invalid">
+                        Add item
+                    </md-button>
+                    <md-button ng-click="addNewItem(false)"
+                               title="Adds the item, but lets you continue adding items"
+                               class="md-primary md-raised" ng-disabled="newItemForm.$invalid">
+                        Add more
+                    </md-button>
+                </div>
+            </form>
+        </md-card>
+        <md-card class="md-dialog-content">
+            <form name="addFromListForm">
+                <h3>Add item to depot from existing items</h3>
+                <md-list  class="md-dense">
+                    <md-input-container class="md-icon-float md-block">
+                        <!-- Use floating label instead of placeholder -->
+                        <label>Search</label>
+                        <md-icon md-font-icon>search</md-icon>
+                        <input ng-model="searchText" type="text">
+                    </md-input-container>
                     <md-subheader class="md-no-sticky">Existing items in other depots</md-subheader>
-                    <div ng-repeat="item in items">
-                        <md-list-item class="md-3-line" ng-click="selectScreen(screen.id)">
+                    <div ng-repeat="item in items | filter: searchText">
+                        <md-list-item class="md-2-line" ng-click="selectItem(item)"
+                                      ng-class='{ "active": selectedItem._id==item._id}'>
                             <md-icon mc-font-icon>radio_button_checked</md-icon>
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{item.name}}</h3>
@@ -69,16 +77,17 @@
                     </div>
                     <md-input-container>
                         <label>Quantity</label>
-                        <input type="number" ng-model="addItem.amount">
+                        <input type="number" ng-model="quantity" required>
                     </md-input-container>
                 </md-list>
                 <div layout="row" layout-align="end center">
 
-                    <md-button class="md-primary md-raised">
+                    <md-button class="md-primary md-raised" ng-click="addExistingItem()" ng-disabled="addFromListForm.$invalid || selectedItem == ''">
                         Add item
                     </md-button>
                 </div>
-            </md-card>
+            </form>
+        </md-card>
 
-        </md-dialog-content>
+    </md-dialog-content>
 </md-dialog>

@@ -19,7 +19,7 @@ var ItemController = require('controllers/ItemController');
 var CategoryController = require('controllers/CategoryController');
 // Directives
 
-//Services3
+//Services
 var APIService = require('services/APIService');
 var DepotService = require('services/DepotService');
 var ItemService = require('services/ItemService');
