@@ -78,14 +78,21 @@ module.exports = function (app) {
         var depotId = req.params.id;
         console.log("item first", item);
 
-        //items.updateQuantity(item,item.quantity,function(){
-        //
-        //})
-        depots.updateItemInDepot(item, depotId, function () {
-            res.end();
+        items.updateItem(item.item,function(){
+            depots.updateItemInDepot(item, depotId, function () {
+                res.end();
+            });
         });
-
     });
+
+    app.post('/depot/', function (req, res) {
+        var depot = req.body.depot;
+
+        depots.addDepot(depot,function(){
+           res.end();
+        });
+    });
+
 
     app.post('/addExistingItemToDepot', function (req, res) {
 

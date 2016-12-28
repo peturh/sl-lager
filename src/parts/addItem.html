@@ -1,5 +1,4 @@
 <md-dialog aria-label="Add new item to depot" ng-init="init()" ng-cloak md-padding>
-    <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Add item to depot</h2>
@@ -49,7 +48,7 @@
                         </md-button>
                         <md-button ng-click="addNewItem(false)"
                                    title="Adds the item, but lets you continue adding items"
-                                   class="md-primary md-raised" ng-disabled="item.$invalid">
+                                   class="md-primary md-raised" ng-disabled="newItemForm.$invalid">
                             Add more
                         </md-button>
                     </div>
@@ -82,5 +81,4 @@
             </md-card>
 
         </md-dialog-content>
-    </form>
 </md-dialog>

@@ -35,6 +35,7 @@ var DepotTemplate = require('depot.html');
 var AddItem = require('addItem.html');
 var CategoryTemplate = require('category.html');
 var ItemTemplate = require('item.html');
+var AddDepot = require('addDepot.html');
 
 var materialcss = require('angular-material/angular-material.min.css');
 var stylesheetsLess = require('stylesheets.less');

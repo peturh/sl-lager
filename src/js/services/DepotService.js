@@ -4,6 +4,25 @@ app.service('DepotService', ['$http', function ($http) {
 
     var service = {};
 
+    service.addNewDepot = function (depot) {
+        var payload = {
+            depot : depot
+        };
+        return $http(
+            {
+                method: 'POST',
+                url: "/depot/",
+                data : payload
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
+
     /**
      * Get available depots from API
      * @returns {*} - The depots

@@ -11,28 +11,16 @@ module.exports = {
             }
         })
     },
-    updateQuantity : function(item,quantityToAdd,callback){
-        /**
-         * Only handles added values!!!
-         */
-        items.findOne({_id:item._id}).exec(function(err,item){
+    updateItem : function(item,callback){
+        console.log("the item",item)
+
+        items.findOneAndUpdate({_id:item._id},{name:item.name,description:item.description, quantity: item.quantity}).exec(function(err,item){
             if(err){
                 return callback(err);
             }
-            else{
-
-                var oldQuantity = item.quantity;
-                var newQuantity = oldQuantity + quantityToAdd;
-
-                items.findOneAndUpdate({_id:item._id},{quantity : newQuantity}).exec(function(err,item){
-                    if(err){
-                        return callback(err);
-                    }
-                    else{
-                        console.log("updated item",item);
-                        return callback(item);
-                    }
-                })
+            else {
+                console.log("update item in item",item);
+                callback();
             }
         })
     },

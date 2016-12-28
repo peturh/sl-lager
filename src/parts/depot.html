@@ -71,7 +71,7 @@
                         <label>
                             Quantity
                         </label>
-                        <input type="number" ng-model="depot.selectedItem.depotQuantity">
+                        <input type="number" ng-change="depot.updateTotalQuantity()" ng-model="depot.selectedItem.depotQuantity">
                     </md-input-container>
                 </div>
 

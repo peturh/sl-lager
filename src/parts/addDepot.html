@@ -1,0 +1,36 @@
+<md-dialog aria-label="Add new item to depot" ng-init="init()" ng-cloak md-padding>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add new Depot</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="Close dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <md-card class="md-dialog-content">
+                <form name="newDepotForm" novalidate>
+                    <div>
+                        <md-input-container>
+                            <label>Name</label>
+                            <input type="text" ng-model="depot.name" required>
+                        </md-input-container>
+                    </div>
+                    <div>
+                        <md-input-container>
+                            <label>Location</label>
+                            <input type="text" ng-model="depot.location" required>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="end center">
+                        <md-button ng-click="addNewDepot()" title="Add this item and this dialog closes"
+                                   class="md-raised" ng-disabled="newDepotForm.$invalid">
+                            Add depot
+                        </md-button>
+
+                    </div>
+                </form>
+            </md-card>
+        </md-dialog-content>
+</md-dialog>

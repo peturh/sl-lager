@@ -7,27 +7,31 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         /**
          * The init function - Get available sites to present to the user
          */
-        depot.selectedItem = "";
+        depot.selectedItem = '';
         depot.init = function () {
-            DepotService.getDepot($stateParams.id).then(function (response) {
-                depot.depot = response.data[0];
-            })
+            updateView();
         };
         depot.selectItem = function (item) {
+            depot.originalDepotQuantity = angular.copy(item.depotQuantity);
+            depot.originalTotalQuantity = angular.copy(item.item.quantity);
             depot.selectedItem = item;
             console.log(depot.selectedItem);
         };
 
+        depot.updateTotalQuantity = function(){
+            depot.selectedItem.item.quantity = depot.originalTotalQuantity - (depot.originalDepotQuantity - depot.selectedItem.depotQuantity);
+        };
+
         depot.saveUpdatedItem = function(){
-            console.log(depot.selectedItem);
             DepotService.updateItemInDepot(depot.selectedItem,$stateParams.id).then(function(){
-                MessageService.showToastMessage('Successfully saved updated item.')
+                MessageService.showToastMessage('Successfully saved updated item.');
+                updateView();
             });
         };
 
         depot.addItem = function (ev) {
             $mdDialog.show({
-                    controller: ['$scope', '$mdDialog', 'ItemService', 'DepotService', '$stateParams', DialogController],
+                    controller: ['$scope', '$mdDialog', 'ItemService', 'DepotService', '$stateParams', AddNewItemController],
                     templateUrl: 'addItem.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
@@ -35,17 +39,22 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
                     fullscreen: true
                 })
                 .then(function (screenId) {
-
+                    updateView();
                 }, function () {
                     $scope.status = 'You cancelled the dialog.';
                 });
 
-        }
+        };
 
+        function updateView(){
+            DepotService.getDepot($stateParams.id).then(function (response) {
+                depot.depot = response.data[0];
+            })
+        }
     }]);
 
 
-function DialogController($scope, $mdDialog, ItemService, DepotService, $stateParams) {
+function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $stateParams) {
 
     $scope.item = {
         name: "",
