@@ -43,5 +43,28 @@ app.service('DepotService', ['$http', function ($http) {
             });
     };
 
+    /**
+     * Update the chosen item
+     * @returns {*} -
+     */
+    service.updateItemInDepot = function (updatedItem,depotId) {
+        var item = {
+            item : updatedItem
+        };
+        return $http(
+            {
+                method: 'POST',
+                url: "/updateItemInDepot/"+depotId,
+                data : item
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
+
     return service;
 }]);

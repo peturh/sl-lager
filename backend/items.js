@@ -11,25 +11,40 @@ module.exports = {
             }
         })
     },
-    getItemsFromDepot : function(){
-        items.find({},null,function(err,depots){
+    updateQuantity : function(item,quantityToAdd,callback){
+        /**
+         * Only handles added values!!!
+         */
+        items.findOne({_id:item._id}).exec(function(err,item){
             if(err){
-                return err;
+                return callback(err);
             }
-            else {
-                return depots;
+            else{
+
+                var oldQuantity = item.quantity;
+                var newQuantity = oldQuantity + quantityToAdd;
+
+                items.findOneAndUpdate({_id:item._id},{quantity : newQuantity}).exec(function(err,item){
+                    if(err){
+                        return callback(err);
+                    }
+                    else{
+                        console.log("updated item",item);
+                        return callback(item);
+                    }
+                })
             }
         })
     },
     addItem : function(item,callback){
-        console.log(item)
-        var newItem = new items(item.item);
+        console.log("item in items",item);
+        var newItem = new items(item);
         newItem.save(function(err){
             if(err){
                 return err;
             }
             else{
-                callback();
+                callback(newItem);
             }
         });
     },

@@ -1,11 +1,13 @@
+var uuid = require('uuid');
 var models = require('./models.js');
 var depot = models.getDepotModel();
+var item = models.getItemModel();
 
 module.exports = {
     getDepots: function (callback) {
-        depot.find({}, {itemsAndQuantity: 0}, function (err, depots) {
+        depot.find({}, {itemsAndQuantity: 0}).exec(function (err, depots) {
             if (err) {
-                return err;
+                return callback(err);
             }
             else {
                 return callback(depots);
@@ -23,16 +25,53 @@ module.exports = {
             }
         });
     },
+    updateItemInDepot: function (item, depotId, callback) {
+        
+        var oldDepotQuantity = 0;
+        depot.findOne({
+            id: depotId,
+            "itemsAndQuantity._id": item._id
+        }).exec(function (err, foundDepot) {
+            if (err) {
+                callback(err);
+            }
+            else {
+                for (var i = 0; i < foundDepot.itemsAndQuantity.length; i++) {
+                    if (foundDepot.itemsAndQuantity[i]._id == item._id) {
+                        oldDepotQuantity = foundDepot.itemsAndQuantity[i].depotQuantity;
+
+                        depot.findOneAndUpdate({
+                                id: depotId,
+                                "itemsAndQuantity._id": item._id
+                            },//set and push these values
+                            {
+                                "itemsAndQuantity.$.depotQuantity": item.depotQuantity,
+                                $push: {"itemsAndQuantity.$.history": {quantity: oldDepotQuantity}}
+                            }
+                        ).exec(function (err, oldDepot) {
+                            if (err) {
+                                return callback(err);
+                            }
+                            else {
+                                console.log("old depot", oldDepot);
+                                callback();
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    },
+
     addItemToDepot: function (item, quantity, depotId, callback) {
+        console.log(item);
         var itemsAndQuantity = {
             item: item,
-            quantity: quantity,
-            history: [{
-                quantity: quantity
-            }]
+            depotQuantity: quantity,
+            history: [{quantity: quantity}]
         };
-        console.log(itemsAndQuantity);
-        depot.update({id: depotId}, {$push: {"itemsAndQuantity": itemsAndQuantity}}, {safe: true, upsert: true},
+
+        depot.update({id: depotId}, {$push: {"itemsAndQuantity": itemsAndQuantity}},
             function (err, depot) {
                 if (err) {
                     console.log("error");
@@ -42,10 +81,10 @@ module.exports = {
                     console.log("success", depot);
                     callback(depot);
                 }
-            },    {strict: false})
+            });
     },
     getDepot: function (id, callback) {
-        depot.find({id: id}, function (err, depot) {
+        depot.find({id: id}).populate('itemsAndQuantity.item').exec(function (err, depot) {
             if (err) {
                 return callback(err);
             }

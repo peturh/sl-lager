@@ -25,8 +25,19 @@ var depotSchema = new Schema({
     name: String,
     location: String,
     id: String,
-    itemsAndQuantity: []
-},{ strict: false });
+    itemsAndQuantity: [
+        {
+            item: {
+                type: Schema.Types.ObjectId,
+                ref: 'items'
+            },
+            depotQuantity: Number,
+            history: [{
+                quantity: Number,
+                date: {type: Date, default : Date.now}
+            }]
+        }]
+});
 
 var companySchema = new Schema({
     name: String,

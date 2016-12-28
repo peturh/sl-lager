@@ -4,6 +4,7 @@ var ngMaterial = require('angular-material');
 var ngAnimate = require('angular-animate');
 var ngMessages = require('angular-messages');
 var ngUIRouter = require('angular-ui-router');
+var chartjs = require('chart.js');
 
 //app
 var app = require('app');
@@ -23,7 +24,7 @@ var APIService = require('services/APIService');
 var DepotService = require('services/DepotService');
 var ItemService = require('services/ItemService');
 var CategoryService = require('services/CategoryService');
-
+var MessageService = require('services/MessageService');
 
 // Templates
 

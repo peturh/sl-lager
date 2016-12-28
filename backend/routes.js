@@ -39,7 +39,7 @@ module.exports = function (app) {
      * Gets all items
      */
     app.get('/items', function (req, res) {
-        items.getItems(function(items){
+        items.getItems(function (items) {
             res.send(items);
             res.end();
         })
@@ -47,7 +47,7 @@ module.exports = function (app) {
     });
 
     app.get('/productCategories', function (req, res) {
-        categories.getProductCategories(function(categories){
+        categories.getProductCategories(function (categories) {
             res.send(categories);
             res.end();
         })
@@ -61,19 +61,35 @@ module.exports = function (app) {
         var item = req.body.item;
         var depotId = req.body.depotId;
         var quantity = req.body.item.quantity;
+        console.log(item)
+        items.addItem(item, function (savedItem) {
 
-        items.addItem(req.body,function(){
-            depots.addItemToDepot(item,quantity,depotId,function(item){
-                console.log("The item added to depot: ",item);
+            depots.addItemToDepot(savedItem, quantity, depotId, function (item) {
+                console.log("The item added to depot: ", item);
             })
         });
 
         res.end();
     });
 
+
+    app.post('/updateItemInDepot/:id', function (req, res) {
+        var item = req.body.item;
+        var depotId = req.params.id;
+        console.log("item first", item);
+
+        //items.updateQuantity(item,item.quantity,function(){
+        //
+        //})
+        depots.updateItemInDepot(item, depotId, function () {
+            res.end();
+        });
+
+    });
+
     app.post('/addExistingItemToDepot', function (req, res) {
 
-        items.addItem(req.body,function(){
+        items.addItem(req.body, function () {
 
         });
 

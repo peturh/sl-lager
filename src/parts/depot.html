@@ -1,7 +1,6 @@
 <div layout="column">
-    <div layout="column" layout-gt-md="row" ng-init="depot.init()">
-        <!-- Card with sites available -->
-        <md-card flex-gt-md="100">
+    <div layout="column" layout-gt-sm="row" ng-init="depot.init()">
+        <md-card flex-gt-sm="50">
             <md-toolbar class="layout-padding">
                 <div class="md-toolbar-tools">
                     <md-icon class="md-avatar" md-font-icon>near_me</md-icon>
@@ -10,12 +9,22 @@
                 </div>
             </md-toolbar>
             <md-card-content>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Search</label>
+                    <md-icon md-font-icon>search</md-icon>
+                    <input ng-model="searchText" type="text">
+                    <small class="italic">Search the name, description or quantity of the item.</small>
+                </md-input-container>
+                <md-divider></md-divider>
                 <md-list>
-                    <md-list-item ng-click="depot.selectItem(item.id)" class="md-3-line"
-                                  ng-repeat="item in depot.depot.itemsAndQuantity">
+                    <md-list-item ng-click="depot.selectItem(item)" class="md-3-line"
+                                  ng-repeat="item in depot.depot.itemsAndQuantity | filter: searchText"
+                                  ng-class='{ "active": depot.selectedItem._id==item.item._id}'>
                         <md-icon class="md-avatar" md-font-icon>near_me</md-icon>
                         <div class="md-list-item-text" layout="column">
-                           {{item}}
+                            <p>Name: <b>{{item.item.name}}</b></p>
+                            <p>Description: <b>{{item.item.description}}</b></p>
+                            <p>Quantity in depot: <b>{{item.depotQuantity}}</b></p>
                         </div>
                         <md-divider></md-divider>
                     </md-list-item>
@@ -23,8 +32,63 @@
             </md-card-content>
 
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="depot.addItem($event)" class="md-icon-button" title="Add new item" aria-label="Add new item">
+                <md-button ng-click="depot.addItem($event)" class="md-icon-button" title="Add new item"
+                           aria-label="Add new item">
                     <md-icon ng-class="md-48" md-font-icon>add_circle</md-icon>
+                </md-button>
+            </md-card-actions>
+        </md-card>
+
+        <!-- The item section -->
+
+        <md-card flex-gt-sm="50" ng-if="depot.selectedItem">
+            <md-toolbar class="layout-padding">
+                <div class="md-toolbar-tools">
+                    <md-icon class="md-avatar" md-font-icon>radio_button_checked</md-icon>
+                    <h2 class="layout-padding"><span>{{depot.selectedItem.item.name}}</span></h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+            <md-card-content>
+                <div>
+                    <md-input-container>
+                        <label>
+                            Name
+                        </label>
+                        <input ng-model="depot.selectedItem.item.name">
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-input-container>
+                        <label>
+                            Description
+                        </label>
+                        <input ng-model="depot.selectedItem.item.description">
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-input-container>
+                        <label>
+                            Quantity
+                        </label>
+                        <input type="number" ng-model="depot.selectedItem.depotQuantity">
+                    </md-input-container>
+                </div>
+
+                <div>
+                    <md-input-container>
+                        <label>
+                            Total Quantity
+                        </label>
+                        <input disabled type="number" ng-model="depot.selectedItem.item.quantity">
+                    </md-input-container>
+                </div>
+            </md-card-content>
+
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button ng-click="depot.saveUpdatedItem($event)" class="md-icon-button" title="Save updated item"
+                           aria-label="Save updated item">
+                    <md-icon ng-class="md-48" md-font-icon>save</md-icon>
                 </md-button>
             </md-card-actions>
         </md-card>

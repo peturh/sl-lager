@@ -11,32 +11,6 @@
         </md-toolbar>
         <md-dialog-content>
             <md-card class="md-dialog-content">
-                <h3>Add item from list</h3>
-                <md-list>
-                    <md-subheader class="md-no-sticky">Existing items</md-subheader>
-                    <div ng-repeat="item in depot.items">
-                        <md-list-item class="md-2-line" ng-click="selectScreen(screen.id)">
-                            <md-icon md-font-set="fa fa-2x">&#xf26c</md-icon>
-                            <div class="md-list-item-text" layout="column">
-                                <h3>{{screen.description}}</h3>
-                                <h4>{{screen.id}}</h4>
-                            </div>
-                        </md-list-item>
-                    </div>
-                    <md-input-container>
-                        <label>Quantity</label>
-                        <input type="number" ng-model="addItem.amount">
-                    </md-input-container>
-                </md-list>
-                <div layout="row" layout-align="end center">
-
-                    <md-button class="md-primary md-raised">
-                        Add item
-                    </md-button>
-                </div>
-            </md-card>
-
-            <md-card class="md-dialog-content">
                 <form name="newItemForm" novalidate>
                     <h3>Create new item</h3>
                     <div>
@@ -81,6 +55,32 @@
                     </div>
                 </form>
             </md-card>
+            <md-card class="md-dialog-content">
+                <h3>Add item from list</h3>
+                <md-list>
+                    <md-subheader class="md-no-sticky">Existing items in other depots</md-subheader>
+                    <div ng-repeat="item in items">
+                        <md-list-item class="md-3-line" ng-click="selectScreen(screen.id)">
+                            <md-icon mc-font-icon>radio_button_checked</md-icon>
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{item.name}}</h3>
+                                <h4>{{item.description}}</h4>
+                            </div>
+                        </md-list-item>
+                    </div>
+                    <md-input-container>
+                        <label>Quantity</label>
+                        <input type="number" ng-model="addItem.amount">
+                    </md-input-container>
+                </md-list>
+                <div layout="row" layout-align="end center">
+
+                    <md-button class="md-primary md-raised">
+                        Add item
+                    </md-button>
+                </div>
+            </md-card>
+
         </md-dialog-content>
     </form>
 </md-dialog>
