@@ -49,6 +49,14 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         function updateView() {
             DepotService.getDepot($stateParams.id).then(function (response) {
                 depot.depot = response.data[0];
+                if (depot.selectedItem !== '') {
+                    for (var i = 0; i < depot.depot.itemsAndQuantity.length; i++) {
+                        if (depot.depot.itemsAndQuantity[i].item._id === depot.selectedItem.item._id) {
+                            depot.selectedItem = depot.depot.itemsAndQuantity[i];
+                            break;
+                        }
+                    }
+                }
             })
         }
     }]);

@@ -5,6 +5,7 @@ var ngAnimate = require('angular-animate');
 var ngMessages = require('angular-messages');
 var ngUIRouter = require('angular-ui-router');
 var chartjs = require('chart.js');
+var moment = require('moment');
 
 //app
 var app = require('app');
@@ -18,6 +19,8 @@ var DepotController = require('controllers/DepotController');
 var ItemController = require('controllers/ItemController');
 var CategoryController = require('controllers/CategoryController');
 // Directives
+
+var ChartDirective = require('directives/Chart');
 
 //Services
 var APIService = require('services/APIService');

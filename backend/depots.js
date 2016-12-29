@@ -17,39 +17,24 @@ module.exports = {
     },
     updateItemInDepot: function (item, depotId, callback) {
 
-        var oldDepotQuantity = 0;
-        depots.findOne({
-            id: depotId,
-            "itemsAndQuantity._id": item._id
-        }).exec(function (err, foundDepot) {
+
+        depots.findOneAndUpdate({
+                id: depotId,
+                "itemsAndQuantity._id": item._id
+            },//set and push these values
+            {
+                "itemsAndQuantity.$.depotQuantity": item.depotQuantity,
+                $push: {"itemsAndQuantity.$.history": {quantity: item.depotQuantity}}
+            }
+        ).exec(function (err, oldDepot) {
             if (err) {
-                callback(err);
+                return callback(err);
             }
             else {
-                for (var i = 0; i < foundDepot.itemsAndQuantity.length; i++) {
-                    if (foundDepot.itemsAndQuantity[i]._id == item._id) {
-                        oldDepotQuantity = foundDepot.itemsAndQuantity[i].depotQuantity;
-
-                        depots.findOneAndUpdate({
-                                id: depotId,
-                                "itemsAndQuantity._id": item._id
-                            },//set and push these values
-                            {
-                                "itemsAndQuantity.$.depotQuantity": item.depotQuantity,
-                                $push: {"itemsAndQuantity.$.history": {quantity: oldDepotQuantity}}
-                            }
-                        ).exec(function (err, oldDepot) {
-                            if (err) {
-                                return callback(err);
-                            }
-                            else {
-                                callback();
-                            }
-                        });
-                    }
-                }
+                callback();
             }
         });
+
     },
 
     addItemToDepot: function (item, quantity, depotId, callback) {
