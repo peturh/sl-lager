@@ -38,7 +38,7 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
                     clickOutsideToClose: true,
                     fullscreen: true
                 })
-                .then(function (screenId) {
+                .then(function () {
                     updateView();
                 }, function () {
                     $scope.status = 'You cancelled the dialog.';
@@ -62,12 +62,13 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
         category: "",
         quantity: ""
     };
+
     $scope.selectedItem = "";
-    $scope.quantity = 0;
 
     $scope.init = function () {
         ItemService.getItems().then(function (response) {
             $scope.items = response.data;
+            console.log($scope.items);
         });
     };
 
@@ -81,16 +82,20 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
 
     $scope.selectItem = function (item) {
         $scope.selectedItem = item;
+        console.log($scope.selectedItem);
     };
 
-    $scope.addExistingItem = function (item, quantity, close) {
-        ItemService.addExistingItemToDepot($scope.item, $stateParams.id).then(function () {
+    $scope.addExistingItem = function (close) {
+        console.log($scope.selectedItem.quantity);
+        console.log($scope.selectedItem.depotQuantity);
+        $scope.selectedItem.quantity = $scope.selectedItem.quantity + $scope.selectedItem.depotQuantity;
+        console.log($scope.selectedItem);
+        ItemService.addExistingItemToDepot($scope.selectedItem, $stateParams.id).then(function () {
             if (close) {
                 $mdDialog.hide();
             }
             else {
                 $scope.selectedItem = "";
-                $scope.quantity = 0;
             }
         })
     };

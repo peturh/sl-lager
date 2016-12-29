@@ -95,12 +95,14 @@ module.exports = function (app) {
 
 
     app.post('/addExistingItemToDepot', function (req, res) {
+        var item = req.body.item;
+        var depotQuantity = req.body.item.depotQuantity;
+        var depotId = req.body.depotId;
 
-        items.addItem(req.body, function () {
-
+        items.updateItem(item,function(){
+            depots.addItemToDepot(item,depotQuantity,depotId,function(){
+                res.end();
+            })
         });
-
-        console.log(req.body);
-        res.end();
     });
 };

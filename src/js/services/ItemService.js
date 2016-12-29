@@ -32,7 +32,7 @@ app.service('ItemService', ['$http', function ($http) {
         return $http(
             {
                 method: 'GET',
-                url: "/depot/"+depotId
+                url: "/depot/" + depotId
             })
             .success(function (data, status) {
                 return data;
@@ -43,12 +43,12 @@ app.service('ItemService', ['$http', function ($http) {
             });
     };
 
-    service.addNewItemToDepot = function (item,depotId) {
+    service.addNewItemToDepot = function (item, depotId) {
         var payload = {
-            item : item,
-            depotId : depotId
+            item: item,
+            depotId: depotId
         };
-        console.log(payload)
+        console.log(payload);
         return $http(
             {
                 method: 'POST',
@@ -63,13 +63,17 @@ app.service('ItemService', ['$http', function ($http) {
                 return "Request failed";
             });
     };
-    service.addExistingItemToDepot = function (item) {
-        console.log(item);
+    service.addExistingItemToDepot = function (item, depotId) {
+        var payload = {
+            item: item,
+            depotId: depotId
+        };
+        console.log(payload);
         return $http(
             {
                 method: 'POST',
-                data: item,
-                url: "/addExistingItemToDepot/"
+                data: payload,
+                url: "/addExistingItemToDepot"
             })
             .success(function (data, status) {
                 return data;

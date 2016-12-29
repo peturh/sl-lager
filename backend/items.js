@@ -12,7 +12,7 @@ module.exports = {
         })
     },
     updateItem : function(item,callback){
-        console.log("the item",item)
+        console.log("the item",item);
 
         items.findOneAndUpdate({_id:item._id},{name:item.name,description:item.description, quantity: item.quantity}).exec(function(err,item){
             if(err){

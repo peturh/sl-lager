@@ -56,7 +56,7 @@ function AddNewDepotController($scope, $mdDialog, DepotService) {
 
     $scope.depot = {
         name: "",
-        location: "",
+        location: ""
     };
 
     $scope.init = function () {
