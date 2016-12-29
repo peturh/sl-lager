@@ -94,10 +94,7 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
     };
 
     $scope.addExistingItem = function (close) {
-        console.log($scope.selectedItem.quantity);
-        console.log($scope.selectedItem.depotQuantity);
         $scope.selectedItem.quantity = $scope.selectedItem.quantity + $scope.selectedItem.depotQuantity;
-        console.log($scope.selectedItem);
         ItemService.addExistingItemToDepot($scope.selectedItem, $stateParams.id).then(function () {
             if (close) {
                 $mdDialog.hide();
