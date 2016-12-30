@@ -62,12 +62,9 @@ app.directive('chart', [function () {
                 var ctx = document.getElementById('chart');
                 myLineChart = new Chart(ctx, {
                     type: 'line',
-                    data: data,
+                    data: data
                 });
-
             }
-
-
         }
     }
 }]);

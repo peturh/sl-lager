@@ -80,10 +80,17 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
             var allItems = response.data;
             DepotService.getDepot($stateParams.id).then(function (response) {
                 var depotItems = response.data[0].itemsAndQuantity;
-                for (var i = 0; i < allItems.length; i++) {
-                    for (var j = 0; j < depotItems.length; j++) {
-                        if (allItems[i]._id !== depotItems[j].item._id) {
-                            $scope.items.push(allItems[i]);
+                if (depotItems.length === 0) {
+                    $scope.items = allItems;
+                }
+                else {
+
+
+                    for (var i = 0; i < allItems.length; i++) {
+                        for (var j = 0; j < depotItems.length; j++) {
+                            if (allItems[i]._id !== depotItems[j].item._id) {
+                                $scope.items.push(allItems[i]);
+                            }
                         }
                     }
                 }
