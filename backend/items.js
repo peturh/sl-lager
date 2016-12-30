@@ -1,9 +1,9 @@
 var models = require('./models.js');
 var items = models.getItemModel();
 module.exports = {
-    getItems : function(callback){
-        items.find({},null,function(err,items){
-            if(err){
+    getItems: function (callback) {
+        items.find({}, null, function (err, items) {
+            if (err) {
                 return callback(err);
             }
             else {
@@ -11,37 +11,54 @@ module.exports = {
             }
         })
     },
-    updateItem : function(item,callback){
-        console.log("the item",item);
+    updateItem: function (item, callback) {
 
-        items.findOneAndUpdate({_id:item._id},{name:item.name,description:item.description, quantity: item.quantity}).exec(function(err,item){
-            if(err){
+        items.findOneAndUpdate({_id: item._id}, {
+            name: item.name,
+            description: item.description,
+            quantity: item.quantity,
+            $push: {
+                history: {
+                    quantity: item.quantity
+                }
+            }
+
+        }).exec(function (err, item) {
+            if (err) {
                 return callback(err);
             }
             else {
-                console.log("update item in item",item);
+                console.log("update item in item", item);
                 callback();
             }
         })
     },
-    addItem : function(item,callback){
-        console.log("item in items",item);
-        var newItem = new items(item);
-        newItem.save(function(err){
-            if(err){
+    addItem: function (item, callback) {
+        console.log("item in items", item);
+        var newItem = new items({
+            name: item.name,
+            description: item.description,
+            quantity: item.quantity,
+            history: [{
+                quantity: item.quantity
+            }]
+        });
+        newItem.save(function (err) {
+            if (err) {
                 return err;
             }
-            else{
+            else {
                 callback(newItem);
             }
         });
-    },
-    getItem : function(id){
-        item.find({id:id},function(err,item){
-            if(err){
+    }
+    ,
+    getItem: function (id) {
+        item.find({id: id}, function (err, item) {
+            if (err) {
                 return err;
             }
-            else{
+            else {
                 return item;
             }
         })

@@ -14,11 +14,15 @@ var itemSchema = new Schema({
     description: String,
     id: String,
     externalId: String,
-    date: {
+    dateCreated: {
         default: Date.now,
         type: Date
     },
-    category: [productCategorySchema]
+    category: [productCategorySchema],
+    history: [{
+        quantity: Number,
+        date: {type: Date, default: Date.now}
+    }]
 });
 
 var depotSchema = new Schema({
@@ -34,7 +38,7 @@ var depotSchema = new Schema({
             depotQuantity: Number,
             history: [{
                 quantity: Number,
-                date: {type: Date, default : Date.now}
+                date: {type: Date, default: Date.now}
             }]
         }]
 });

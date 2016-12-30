@@ -57,7 +57,7 @@
         <md-card class="md-dialog-content">
             <form name="addFromListForm">
                 <h3>Add item to depot from existing items</h3>
-                <md-list class="md-dense">
+                <md-list class="md-dense" ng-if="items.length!==0">
                     <md-input-container class="md-icon-float md-block">
                         <!-- Use floating label instead of placeholder -->
                         <label>Search</label>
@@ -80,6 +80,9 @@
                         <input type="number" ng-model="selectedItem.depotQuantity" required>
                     </md-input-container>
                 </md-list>
+                <div ng-if="items.length == 0">
+                    <p>There are no items in other depots that this depot already has, or there are no available items.</p>
+                </div>
                 <div layout="row" layout-align="end center">
 
                     <md-button title="Add this item and this dialog closes" class="md-raised"

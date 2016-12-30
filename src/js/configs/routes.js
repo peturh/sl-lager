@@ -27,7 +27,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             url: '/items/',
             templateUrl: 'item.html',
             controller: 'ItemController',
-            controllerAs: 'item'
+            controllerAs: 'itemCtrl'
         })
         .state('categories', {
             url: '/categories/',

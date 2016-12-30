@@ -98,7 +98,7 @@ module.exports = function (app) {
         var item = req.body.item;
         var depotQuantity = req.body.item.depotQuantity;
         var depotId = req.body.depotId;
-
+        console.log(req.body.item);
         items.updateItem(item,function(){
             depots.addItemToDepot(item,depotQuantity,depotId,function(){
                 res.end();

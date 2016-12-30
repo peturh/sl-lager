@@ -1,7 +1,6 @@
-<div layout="column">
-    <div layout="column" layout-gt-md="row" ng-init="item.init()">
-        <!-- Card with sites available -->
-        <md-card flex-gt-md="100">
+<div layout-gt-sm="row" ng-init="itemCtrl.init()">
+    <div flex-gt-sm="50">
+        <md-card>
             <md-toolbar class="layout-padding">
                 <div class="md-toolbar-tools">
                     <md-icon md-font-icon="material-icons">radio_button_checked</md-icon>
@@ -18,14 +17,15 @@
                 </md-input-container>
                 <md-divider></md-divider>
                 <md-list>
-                    <md-list-item ng-click="item.selectItem(depot.id)" class="md-3-line"
-                                  ng-repeat="item in item.items | filter: searchText">
+                    <md-list-item class="md-3-line"
+                                  ng-repeat="thing in itemCtrl.items | filter: searchText"
+                                  ng-click="itemCtrl.selectItem(thing)">
                         <md-icon class="md-avatar" md-font-icon>radio_button_checked</md-icon>
                         <div class="md-list-item-text" layout="column">
-                            <p>Name: <b>{{item.name}}</b></p>
-                            <p>Description: <b>{{item.description}}</b></p>
+                            <p>Name: <b>{{thing.name}}</b></p>
+                            <p>Description: <b>{{thing.description}}</b></p>
                             <p title="This amount is the total amount of this items spread across all depots">Total
-                                Quantity: <b>{{item.quantity}}</b></p>
+                                Quantity: <b>{{thing.quantity}}</b></p>
                         </div>
                         <md-divider></md-divider>
                     </md-list-item>
@@ -39,6 +39,62 @@
                     <md-icon ng-class="md-48" md-font-icon>add_circle</md-icon>
                 </md-button>
             </md-card-actions>
+        </md-card>
+    </div>
+    <!-- The item section -->
+    <div layout="column" flex-gt-sm="50" ng-if="itemCtrl.selectedItem">
+        <md-card flex>
+            <md-toolbar class="layout-padding">
+                <div class="md-toolbar-tools">
+                    <md-icon class="md-avatar" md-font-icon>radio_button_checked</md-icon>
+                    <h2 class="layout-padding"><span>{{itemCtrl.selectedItem.name}}</span></h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+            <md-card-content>
+                <div>
+                    <md-input-container>
+                        <label>
+                            Name
+                        </label>
+                        <input ng-model="itemCtrl.selectedItem.name">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>
+                            Description
+                        </label>
+                        <input ng-model="itemCtrl.selectedItem.description">
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-input-container>
+                        <label>
+                            Total Quantity
+                        </label>
+                        <input disabled type="number" ng-model="itemCtrl.selectedItem.quantity">
+                    </md-input-container>
+                </div>
+            </md-card-content>
+
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button ng-click="itemCtrl.saveUpdatedItem($event)" class="md-icon-button" title="Save updated item"
+                           aria-label="Save updated item">
+                    <md-icon ng-class="md-48" md-font-icon>save</md-icon>
+                </md-button>
+            </md-card-actions>
+        </md-card>
+
+        <md-card flex>
+            <md-toolbar class="layout-padding">
+                <div class="md-toolbar-tools">
+                    <md-icon class="md-avatar" md-font-icon>timeline</md-icon>
+                    <h2 class="layout-padding"><span>History</span></h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+            <md-card-content>
+                <div chart history="{{itemCtrl.selectedItem.history}}"></div>
+            </md-card-content>
         </md-card>
     </div>
 </div>
