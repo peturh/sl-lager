@@ -11,3 +11,28 @@ app.controller('CategoryController', ['$scope','CategoryService',
         }
 
     }]);
+
+
+
+function AddNewCategoryController($scope, $mdDialog, CategoryService) {
+
+    $scope.category = {
+        name: "",
+        location: ""
+    };
+
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+
+    $scope.addNewDepot = function () {
+        DepotService.addNewDepot($scope.depot).then(function () {
+            $mdDialog.hide();
+        })
+    };
+
+}

@@ -94,7 +94,7 @@
             </md-card-actions>
         </md-card>
 
-        <md-card flex>
+        <md-card>
             <md-toolbar class="layout-padding">
                 <div class="md-toolbar-tools">
                     <md-icon class="md-avatar" md-font-icon>timeline</md-icon>
@@ -103,7 +103,9 @@
                 </div>
             </md-toolbar>
             <md-card-content>
-                <div chart history="{{depot.selectedItem.history}}"></div>
+                <div>
+                    <div chart history="{{depot.selectedItem.history}}"></div>
+                </div>
             </md-card-content>
         </md-card>
     </div>
