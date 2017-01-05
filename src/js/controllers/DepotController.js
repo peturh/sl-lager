@@ -37,7 +37,7 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         depot.saveUpdatedItem = function () {
             DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
                 MessageService.showToastMessage('Successfully saved updated item.');
-                updateView();
+                updateView(function(){});
             });
         };
 
@@ -51,7 +51,7 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
                     fullscreen: true
                 })
                 .then(function () {
-                    updateView();
+                    updateView(function(){});
                 }, function () {
                     $scope.status = 'You cancelled the dialog.';
                 });
@@ -59,13 +59,16 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         };
 
         depot.deleteItem = function (ev) {
-            MessageService.showConfirmMessage('Are you sure you want to delete this item from the depot?', ev, function (deleteItem) {
-                if (deleteItem) {
-                    DepotService.deleteItem(depot.selectedItem, $stateParams.id).then(function () {
-                        updateView();
-                        depot.selectedItem = '';
-                    })
-                }
+
+            DepotService.updateItemInDepot(depot.selectedItem,$stateParams.id).then(function(){
+                MessageService.showConfirmMessage('Are you sure you want to delete this item from the depot?', ev, function (deleteItem) {
+                    if (deleteItem) {
+                        DepotService.deleteItem(depot.selectedItem, $stateParams.id).then(function () {
+                            updateView(function(){});
+                            depot.selectedItem = '';
+                        })
+                    }
+                })
             })
 
         };

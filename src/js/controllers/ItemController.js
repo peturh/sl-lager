@@ -25,7 +25,7 @@ app.controller('ItemController', ['$scope','ItemService','MessageService','$stat
         itemCtrl.saveUpdatedItem = function () {
             ItemService.updateItem(itemCtrl.selectedItem, $stateParams.id).then(function () {
                 MessageService.showToastMessage('Successfully saved updated item.');
-                updateView();
+                updateView(function(){});
             });
         };
 
@@ -34,7 +34,7 @@ app.controller('ItemController', ['$scope','ItemService','MessageService','$stat
                 if(confirm){
                     ItemService.deleteItem(itemCtrl.selectedItem).then(function(){
                         MessageService.showToastMessage('Successfully deleted item.');
-                        updateView();
+                        updateView(function(){});
                         itemCtrl.selectedItem = '';
                     })
                 }

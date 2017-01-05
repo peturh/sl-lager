@@ -106,6 +106,13 @@ module.exports = function (app) {
         });
     });
 
+    app.post('/updateItem',function(req,res){
+        var item = req.body.item;
+        items.updateItem(item,function(){
+            res.end();
+        })
+    });
+
     app.post('/depot/', function (req, res) {
         var depot = req.body.depot;
 

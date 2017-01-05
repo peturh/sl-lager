@@ -102,7 +102,27 @@ app.service('ItemService', ['$http', function ($http) {
                 console.log("failed", data);
                 return "Request failed";
             });
-    }
+    };
+
+    service.updateItem = function(item){
+        var payload = {
+            item: item
+        };
+        console.log(payload);
+        return $http(
+            {
+                method: 'POST',
+                data: payload,
+                url: "/updateItem"
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
 
 
     return service;
