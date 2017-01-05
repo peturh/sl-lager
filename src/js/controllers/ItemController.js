@@ -33,8 +33,14 @@ app.controller('ItemController', ['$scope', 'ItemService', 'MessageService', '$s
             $state.go('items', {id: itemCtrl.selectedItem._id});
 
             ItemService.getDepotsWithItem(itemCtrl.selectedItem).then(function (response) {
-                console.log(response.data);
                 itemCtrl.depots = response.data;
+                for (var i = 0; i < itemCtrl.depots.length; i++) {
+                    for (var j = 0; j < itemCtrl.depots[i].itemsAndQuantity.length; j++) {
+                        if(itemCtrl.depots[i].itemsAndQuantity[j].item === $state.params.id){
+                            itemCtrl.depots[i].quantityInDepot = itemCtrl.depots[i].itemsAndQuantity[j].depotQuantity;
+                        }
+                    }
+                }
             })
 
         };
