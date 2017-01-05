@@ -23,6 +23,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'DepotController',
             controllerAs: 'depot'
         })
+        .state('depot.item',{
+            url: '/item/:itemId',
+            templateUrl: 'depot.html',
+            controller: 'DepotController',
+            controllerAs: 'depot'
+        })
         .state('items', {
             url: '/items/',
             templateUrl: 'item.html',

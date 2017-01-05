@@ -9,13 +9,28 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
          */
         depot.selectedItem = '';
         depot.init = function () {
-            updateView();
+            updateView(function(){
+                if ($state.params.itemId) {
+                    console.log("YA")
+                    for (var i = 0; i < depot.depot.itemsAndQuantity.length; i++) {
+                        console.log(depot.depot.itemsAndQuantity[i]._id)
+                        console.log($state.params.itemId)
+                        if (depot.depot.itemsAndQuantity[i]._id === $state.params.itemId) {
+                            depot.selectedItem = depot.depot.itemsAndQuantity[i];
+                            break;
+                        }
+                    }
+                }
+            });
         };
+
         depot.selectItem = function (item) {
             depot.originalDepotQuantity = angular.copy(item.depotQuantity);
             depot.originalTotalQuantity = angular.copy(item.item.quantity);
             depot.selectedItem = item;
-            console.log(depot.selectedItem);
+            console.log(item);
+            $state.go('depot.item', {itemId: depot.selectedItem._id});
+            console.log($state)
         };
 
         depot.updateTotalQuantity = function () {
@@ -46,10 +61,10 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
 
         };
 
-        depot.deleteItem = function(ev){
-            MessageService.showConfirmMessage('Are you sure you want to delete this item from the depot?',ev,function(deleteItem){
-                if(deleteItem){
-                    DepotService.deleteItem(depot.selectedItem,$stateParams.id).then(function(){
+        depot.deleteItem = function (ev) {
+            MessageService.showConfirmMessage('Are you sure you want to delete this item from the depot?', ev, function (deleteItem) {
+                if (deleteItem) {
+                    DepotService.deleteItem(depot.selectedItem, $stateParams.id).then(function () {
                         updateView();
                         depot.selectedItem = '';
                     })
@@ -58,17 +73,18 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
 
         };
 
-        function updateView() {
+        function updateView(callback) {
             DepotService.getDepot($stateParams.id).then(function (response) {
                 depot.depot = response.data[0];
                 if (depot.selectedItem !== '') {
                     for (var i = 0; i < depot.depot.itemsAndQuantity.length; i++) {
                         if (depot.depot.itemsAndQuantity[i].item._id === depot.selectedItem.item._id) {
                             depot.selectedItem = depot.depot.itemsAndQuantity[i];
-                            break;
+                            callback();
                         }
                     }
                 }
+                callback();
             })
         }
     }]);
