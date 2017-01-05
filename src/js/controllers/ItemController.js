@@ -54,7 +54,7 @@ app.controller('ItemController', ['$scope','ItemService','MessageService','$stat
 
         itemCtrl.goToDepot = function(id){
             $state.go('depot',{id:id});
-        }
+        };
 
         function updateView(callback){
             ItemService.getItems().then(function(response){
