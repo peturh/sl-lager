@@ -4,6 +4,18 @@ var depots = models.getDepotModel();
 var item = models.getItemModel();
 
 module.exports = {
+
+    editDepot: function (depot, callback) {
+        depots.findOneAndUpdate({_id: depot._id}, depot).exec(function (err) {
+            if (err) {
+                return callback(err);
+            }
+            else {
+                callback();
+            }
+        })
+    },
+
     getDepots: function (callback) {
         depots.find({}, {itemsAndQuantity: 0}).exec(function (err, depots) {
             if (err) {
@@ -16,7 +28,6 @@ module.exports = {
 
     },
     updateItemInDepot: function (item, depotId, callback) {
-
 
         depots.findOneAndUpdate({
                 id: depotId,
@@ -35,6 +46,23 @@ module.exports = {
             }
         });
 
+    },
+
+    deleteItemInDepot: function (item, depotId, callback) {
+        depots.findOneAndUpdate({
+                id: depotId
+            },
+            {
+                $pull: {"itemsAndQuantity": {_id: item._id}}
+            }
+        ).exec(function (err) {
+            if (err) {
+                return callback(err);
+            }
+            else {
+                callback();
+            }
+        });
     },
 
     addItemToDepot: function (item, quantity, depotId, callback) {

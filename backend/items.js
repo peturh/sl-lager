@@ -54,7 +54,7 @@ module.exports = {
     }
     ,
     getItem: function (id) {
-        item.find({id: id}, function (err, item) {
+        items.find({id: id}, function (err, item) {
             if (err) {
                 return err;
             }
@@ -63,5 +63,15 @@ module.exports = {
             }
         })
 
+    },
+    removeItem : function(id,callback){
+        items.find({_id:id}).remove().exec(function(err){
+            if(err){
+                callback(err);
+            }
+            else{
+                callback()
+            }
+        })
     }
 }

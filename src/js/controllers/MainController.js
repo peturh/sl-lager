@@ -25,6 +25,16 @@ app.controller('MainController', ['$scope', 'DepotService', '$mdSidenav', '$stat
 
         };
 
+        main.editDepot = function(depot){
+            main.selectedDepot = depot;
+        };
+
+        main.saveUpdatedDepot = function(){
+            DepotService.updateDepot(main.selectedDepot).then(function(){
+                updateView();
+            })
+        };
+
         function updateView() {
             DepotService.getDepots().then(function (response) {
                 main.depots = response.data;

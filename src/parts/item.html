@@ -1,5 +1,5 @@
 <div layout-gt-sm="row" ng-init="itemCtrl.init()">
-    <div flex-gt-sm="50">
+    <div flex>
         <md-card>
             <md-toolbar class="layout-padding">
                 <div class="md-toolbar-tools">
@@ -19,6 +19,7 @@
                 <md-list>
                     <md-list-item class="md-3-line"
                                   ng-repeat="thing in itemCtrl.items | filter: searchText"
+                                  ng-class='{ "active": itemCtrl.selectedItem._id==thing._id}'
                                   ng-click="itemCtrl.selectItem(thing)">
                         <md-icon class="md-avatar" md-font-icon>radio_button_checked</md-icon>
                         <div class="md-list-item-text" layout="column">
@@ -42,7 +43,7 @@
         </md-card>
     </div>
     <!-- The item section -->
-    <div layout="column" flex-gt-sm="50" ng-if="itemCtrl.selectedItem">
+    <div layout="column" flex ng-if="itemCtrl.selectedItem">
         <md-card flex>
             <md-toolbar class="layout-padding">
                 <div class="md-toolbar-tools">
@@ -76,12 +77,22 @@
                 </div>
             </md-card-content>
 
-            <md-card-actions layout="row" layout-align="end center">
+
+            <md-card-actions layout="row" layout-align="space-between center">
+                <md-button  ng-click="itemCtrl.deleteItem($event)"
+                            ng-disabled="itemCtrl.selectedItem.quantity != 0" class="md-icon-button"
+                            title="Delete item (only possible if item does not exist in other depots"
+                            aria-label="Delete item (only possible if item does not exist in other depots">
+                    <md-icon ng-class="md-48" md-font-icon>delete</md-icon>
+                </md-button>
+
                 <md-button ng-click="itemCtrl.saveUpdatedItem($event)" class="md-icon-button" title="Save updated item"
                            aria-label="Save updated item">
                     <md-icon ng-class="md-48" md-font-icon>save</md-icon>
                 </md-button>
             </md-card-actions>
+
+
         </md-card>
 
         <md-card>

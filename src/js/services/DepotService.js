@@ -85,5 +85,45 @@ app.service('DepotService', ['$http', function ($http) {
             });
     };
 
+    service.updateDepot = function(depot){
+        var payload = {
+            depot : depot
+        };
+
+        return $http(
+            {
+                method: 'POST',
+                url: "/updateDepot/",
+                data : payload
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
+
+    service.deleteItem = function(item,depotId){
+        var payload = {
+            item : item
+        };
+        return $http(
+            {
+                method: 'POST',
+                url: "/deleteItemInDepot/"+depotId,
+                data : payload
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+
+    };
+
     return service;
 }]);

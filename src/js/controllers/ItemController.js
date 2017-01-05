@@ -19,6 +19,20 @@ app.controller('ItemController', ['$scope','ItemService','MessageService',
                 updateView();
             });
         };
+
+        itemCtrl.deleteItem = function(ev){
+            MessageService.showConfirmMessage('Are you sure you want to totally delete this item?',ev,function(confirm){
+                if(confirm){
+                    ItemService.deleteItem(itemCtrl.selectedItem).then(function(){
+                        MessageService.showToastMessage('Successfully deleted item.');
+                        updateView();
+                        itemCtrl.selectedItem = '';
+                    })
+                }
+            })
+
+        };
+
         function updateView(){
             ItemService.getItems().then(function(response){
                 itemCtrl.items = response.data;

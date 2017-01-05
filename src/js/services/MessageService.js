@@ -26,10 +26,20 @@ app.service('MessageService', ['$mdToast', '$mdDialog', function ($mdToast, $mdD
         /**
          * Think of styling this mdToast differently in future.
          */
-        showConfirmMessage: function (message) {
-            $mdToast.show(
-                $mdToast.simple().textContent(message).position('right').hideDelay(4000)
-            );
+        showConfirmMessage: function (message,ev,callback) {
+            var confirm = $mdDialog.confirm()
+                .title('Confirm')
+                .textContent(message)
+                .targetEvent(ev)
+                .ok('OK!')
+                .cancel('No');
+
+            $mdDialog.show(confirm).then(function() {
+                callback(true)
+
+            }, function() {
+                callback(false)
+            });
         }
     };
 }]);

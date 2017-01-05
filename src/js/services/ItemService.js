@@ -84,6 +84,26 @@ app.service('ItemService', ['$http', function ($http) {
             });
     };
 
+    service.deleteItem = function(item){
+        var payload = {
+            item: item
+        };
+        console.log(payload);
+        return $http(
+            {
+                method: 'POST',
+                data: payload,
+                url: "/deleteItem"
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    }
+
 
     return service;
 }]);

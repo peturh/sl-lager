@@ -1,34 +1,76 @@
-<div layout="column">
-    <div layout="column" layout-gt-md="row" ng-init="main.init()">
-        <!-- Card with sites available -->
-        <md-card flex-gt-md="100">
-            <md-toolbar class="layout-padding">
-                <div class="md-toolbar-tools">
-                    <md-icon md-font-set="fa">&#xf041</md-icon>
-                    <h2 class="layout-padding"><span>Choose Depot</span></h2>
-                    <span flex></span>
-                </div>
-            </md-toolbar>
-            <md-card-content>
-                <md-list>
-                    <md-list-item ng-click="main.selectDepot(depot.id)" class="md-3-line"
-                                  ng-repeat="depot in main.depots">
+<div layout="column" layout-gt-sm="row" ng-init="main.init()">
+    <!-- Card with sites available -->
+    <md-card flex="50">
+        <md-toolbar class="layout-padding">
+            <div class="md-toolbar-tools">
+                <md-icon md-font-set="fa">&#xf041</md-icon>
+                <h2 class="layout-padding"><span>Choose Depot</span></h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <md-list>
+                <div ng-repeat="depot in main.depots">
+                    <md-list-item class="md-3-line"
+                                  ng-click="main.selectDepot(depot.id)"
+                                  ng-class='{ "active": main.selectedDepot._id==depot._id}'>
                         <md-icon class="md-avatar" md-font-icon>near_me</md-icon>
                         <div class="md-list-item-text" layout="column">
                             <p>Name: <b>{{depot.name}}</b></p>
                             <p>Location: <b>{{depot.location}}</b></p>
                             <p>Id: <b>{{depot.id}}</b></p>
+
                         </div>
+                        <div class="edit-pen" ng-click="main.editDepot(depot)">
+                            <md-icon md-font-icon>mode_edit</md-icon>
+                        </div>
+
                         <md-divider></md-divider>
                     </md-list-item>
-                </md-list>
-            </md-card-content>
+                </div>
+            </md-list>
+        </md-card-content>
 
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="main.addDepot($event)" class="md-icon-button" title="Add new depot" aria-label="Add new depot">
-                    <md-icon ng-class="md-48" md-font-icon>add_circle</md-icon>
-                </md-button>
-            </md-card-actions>
-        </md-card>
-    </div>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-click="main.addDepot($event)" class="md-icon-button" title="Add new depot"
+                       aria-label="Add new depot">
+                <md-icon ng-class="md-48" md-font-icon>add_circle</md-icon>
+            </md-button>
+        </md-card-actions>
+    </md-card>
+
+    <!-- The depot section -->
+
+    <md-card flex="50" ng-if="main.selectedDepot">
+        <md-toolbar class="layout-padding">
+            <div class="md-toolbar-tools">
+                <md-icon class="md-avatar" md-font-icon>near_me</md-icon>
+                <h2 class="layout-padding"><span>{{main.selectedDepot.name}}</span></h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-card-content flex>
+            <div>
+                <md-input-container>
+                    <label>
+                        Name
+                    </label>
+                    <input ng-model="main.selectedDepot.name">
+                </md-input-container>
+                <md-input-container>
+                    <label>
+                        Location
+                    </label>
+                    <input ng-model="main.selectedDepot.location">
+                </md-input-container>
+            </div>        </md-card-content>
+
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-click="main.saveUpdatedDepot($event)" class="md-icon-button" title="Save updated depot"
+                       aria-label="Save updated depot">
+                <md-icon ng-class="md-48" md-font-icon>save</md-icon>
+            </md-button>
+        </md-card-actions>
+    </md-card>
+</div>
 </div>

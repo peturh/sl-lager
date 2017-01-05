@@ -46,6 +46,18 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
 
         };
 
+        depot.deleteItem = function(ev){
+            MessageService.showConfirmMessage('Are you sure you want to delete this item from the depot?',ev,function(deleteItem){
+                if(deleteItem){
+                    DepotService.deleteItem(depot.selectedItem,$stateParams.id).then(function(){
+                        updateView();
+                        depot.selectedItem = '';
+                    })
+                }
+            })
+
+        };
+
         function updateView() {
             DepotService.getDepot($stateParams.id).then(function (response) {
                 depot.depot = response.data[0];

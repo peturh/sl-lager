@@ -127,6 +127,29 @@ module.exports = function (app) {
         });
     });
 
+    app.post('/updateDepot', function (req, res) {
+        var depot = req.body.depot;
+
+        depots.editDepot(depot,function(){
+            res.end();
+        });
+    });
+
+    app.post('/deleteItemInDepot/:id', function(req,res){
+        var depotId = req.params.id;
+        var item = req.body.item;
+        depots.deleteItemInDepot(item,depotId,function(){
+            console.log("SUCCESS")
+            res.end();
+        })
+    });
+
+    app.post('/deleteItem', function(req,res){
+        var itemId = req.body.item._id;
+        items.removeItem(itemId,function(){
+            res.end();
+        })
+    });
     /**
      * The authentication checker
      * @param req - The request object
