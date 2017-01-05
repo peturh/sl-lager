@@ -11,10 +11,7 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         depot.init = function () {
             updateView(function(){
                 if ($state.params.itemId) {
-                    console.log("YA")
                     for (var i = 0; i < depot.depot.itemsAndQuantity.length; i++) {
-                        console.log(depot.depot.itemsAndQuantity[i]._id)
-                        console.log($state.params.itemId)
                         if (depot.depot.itemsAndQuantity[i]._id === $state.params.itemId) {
                             depot.selectedItem = depot.depot.itemsAndQuantity[i];
                             break;

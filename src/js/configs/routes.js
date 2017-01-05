@@ -30,7 +30,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controllerAs: 'depot'
         })
         .state('items', {
-            url: '/items/',
+            url: '/items/:id',
             templateUrl: 'item.html',
             controller: 'ItemController',
             controllerAs: 'itemCtrl'

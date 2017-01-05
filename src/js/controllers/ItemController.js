@@ -1,16 +1,25 @@
 var app = require('app');
 
-app.controller('ItemController', ['$scope','ItemService','MessageService',
-    function ($scope, ItemService, MessageService) {
+app.controller('ItemController', ['$scope','ItemService','MessageService','$state', '$stateParams',
+    function ($scope, ItemService, MessageService,$state,$stateParams) {
         var itemCtrl = this;
 
         itemCtrl.init = function(){
-           updateView();
+           updateView(function(){
+                if($state.params.id){
+                    for(var i = 0; i<itemCtrl.items.length; i++){
+                        if($state.params.id === itemCtrl.items[i]._id){
+                            itemCtrl.selectedItem = itemCtrl.items[i];
+
+                        }
+                    }
+                }
+           });
         };
         itemCtrl.selectItem = function (item) {
-            console.log("item",item)
             itemCtrl.selectedItem = item;
-            console.log("WAH",itemCtrl.selectedItem);
+            $state.params.id = itemCtrl.selectedItem._id;
+            $state.go('items',{id:itemCtrl.selectedItem._id});
         };
 
         itemCtrl.saveUpdatedItem = function () {
@@ -33,9 +42,10 @@ app.controller('ItemController', ['$scope','ItemService','MessageService',
 
         };
 
-        function updateView(){
+        function updateView(callback){
             ItemService.getItems().then(function(response){
                 itemCtrl.items = response.data;
+                callback();
             })
         }
 
