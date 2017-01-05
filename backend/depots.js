@@ -107,5 +107,17 @@ module.exports = {
             }
 
         })
+    },
+    getAllDepotsWithItem : function(itemId,callback){
+        console.log(itemId)
+        depots.find({"itemsAndQuantity.item": itemId}).exec(function(err,depots){
+            if(err){
+                callback(err);
+            }
+            else{
+                console.log("HEJ",depots)
+                callback(depots);
+            }
+        })
     }
 };

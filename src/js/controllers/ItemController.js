@@ -10,16 +10,26 @@ app.controller('ItemController', ['$scope','ItemService','MessageService','$stat
                     for(var i = 0; i<itemCtrl.items.length; i++){
                         if($state.params.id === itemCtrl.items[i]._id){
                             itemCtrl.selectedItem = itemCtrl.items[i];
-
+                            ItemService.getDepotsWithItem(itemCtrl.selectedItem).then(function(response){
+                                console.log(response.data);
+                                itemCtrl.depots = response.data;
+                            })
                         }
                     }
                 }
            });
+
         };
         itemCtrl.selectItem = function (item) {
             itemCtrl.selectedItem = item;
             $state.params.id = itemCtrl.selectedItem._id;
             $state.go('items',{id:itemCtrl.selectedItem._id});
+
+            ItemService.getDepotsWithItem(itemCtrl.selectedItem).then(function(response){
+                console.log(response.data);
+                itemCtrl.depots = response.data;
+            })
+
         };
 
         itemCtrl.saveUpdatedItem = function () {
@@ -41,6 +51,10 @@ app.controller('ItemController', ['$scope','ItemService','MessageService','$stat
             })
 
         };
+
+        itemCtrl.goToDepot = function(id){
+            $state.go('depot',{id:id});
+        }
 
         function updateView(callback){
             ItemService.getItems().then(function(response){

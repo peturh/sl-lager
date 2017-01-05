@@ -157,6 +157,17 @@ module.exports = function (app) {
             res.end();
         })
     });
+
+    app.get('/getDepotsWithItem/:id',function(req,res){
+        var itemId = req.params.id;
+        console.log("HEY")
+
+        depots.getAllDepotsWithItem(itemId,function(depots){
+            res.send(depots);
+            res.end();
+        })
+    });
+
     /**
      * The authentication checker
      * @param req - The request object

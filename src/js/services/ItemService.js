@@ -124,6 +124,22 @@ app.service('ItemService', ['$http', function ($http) {
             });
     };
 
+    service.getDepotsWithItem = function(item){
+
+        return $http(
+            {
+                method: 'GET',
+                url: "/getDepotsWithItem/"+item._id
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
+
 
     return service;
 }]);
