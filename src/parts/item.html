@@ -35,10 +35,10 @@
             </md-card-content>
 
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="depot.addItem($event)" class="md-icon-button" title="Add new item"
+                <!--<md-button ng-click="itemCtrl.addItem($event)" class="md-icon-button" title="Add new item"
                            aria-label="Add new item">
                     <md-icon ng-class="md-48" md-font-icon>add_circle</md-icon>
-                </md-button>
+                </md-button>-->
             </md-card-actions>
         </md-card>
     </div>
@@ -77,6 +77,7 @@
                             <div class="md-list-item-text" layout="column">
                                 <p>Name: <b>{{depot.name}}</b></p>
                                 <p>Location: <b>{{depot.location}}</b></p>
+                                <p>Quantity in depot: <b>{{depot.quantityInDepot}}</b></p>
 
                             </div>
                             <md-divider></md-divider>
