@@ -1,0 +1,35 @@
+<md-dialog aria-label="Create new category" md-padding>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Create new category</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="hide()">
+                <md-icon aria-label="Close dialog">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-card class="md-dialog-content">
+            <form name="newCategoryForm" novalidate>
+                <div>
+                    <md-input-container>
+                        <label>Name</label>
+                        <input type="text" ng-model="category.name" required>
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-input-container>
+                        <label>Description</label>
+                        <input type="text" ng-model="category.location" required>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end center">
+                    <md-button ng-click="addNewCategory()" title="Add this category"
+                               class="md-raised" ng-disabled="newCategoryForm.$invalid">
+                        Add category
+                    </md-button>
+                </div>
+            </form>
+        </md-card>
+    </md-dialog-content>
+</md-dialog>

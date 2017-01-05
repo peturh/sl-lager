@@ -34,6 +34,72 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             templateUrl: 'category.html',
             controller: 'CategoryController',
             controllerAs: 'category'
-        })
+        });
+
+
+    /**
+     * Add this for authentication later
+
+     */
+    function alreadyLoggedIn($q, UserService, $state, $timeout) {
+        UserService.getLoginStatus().then(function () {
+
+            if (UserService.user) {
+                $timeout(function () {
+                    // This code runs after the authentication promise has been rejected.
+                    // Go to the log-in page
+                    $state.go('screen', {screenId: UserService.user.screen.id});
+                });
+                return $q.reject()
+            }
+            else {
+                return $q.when();
+            }
+        });
+
+    }
+
+    function authenticateUser($q, UserService, $state, $timeout) {
+
+        UserService.getLoginStatus().then(function () {
+            if (UserService.user) {
+                console.log("is user");
+                return $q.when();
+            } else {
+                console.log("not user");
+
+                $timeout(function () {
+                    // This code runs after the authentication promise has been rejected.
+                    // Go to the log-in page
+                    $state.go('login')
+                });
+                return $q.reject()
+
+            }
+        });
+
+    }
+
+    function authenticateAdmin($q, UserService, $state, $timeout) {
+
+        UserService.getLoginStatus().then(function () {
+            if (UserService.admin) {
+                console.log("is admin");
+                return $q.when()
+            } else {
+                console.log("not admin", $state);
+
+                $timeout(function () {
+                    // This code runs after the authentication promise has been rejected.
+                    // Go to the log-in page
+                    $state.go('login')
+                });
+                return $q.reject()
+
+            }
+        });
+
+
+    }
 
 }]);

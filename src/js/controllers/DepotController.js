@@ -84,8 +84,6 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
                     $scope.items = allItems;
                 }
                 else {
-
-
                     for (var i = 0; i < allItems.length; i++) {
                         for (var j = 0; j < depotItems.length; j++) {
                             if (allItems[i]._id !== depotItems[j].item._id) {

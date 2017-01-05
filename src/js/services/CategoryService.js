@@ -23,5 +23,26 @@ app.service('CategoryService', ['$http', function ($http) {
             });
     };
 
+
+    service.addNewCategory = function (category) {
+        var payload = {
+            category : category
+        };
+        return $http(
+            {
+                method: 'POST',
+                url: "/category/",
+                data : payload
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
+
+
     return service;
 }]);

@@ -39,6 +39,7 @@ var AddItem = require('addItem.html');
 var CategoryTemplate = require('category.html');
 var ItemTemplate = require('item.html');
 var AddDepot = require('addDepot.html');
+var AddCategory = require('addCategory.html');
 
 var materialcss = require('angular-material/angular-material.min.css');
 var stylesheetsLess = require('stylesheets.less');

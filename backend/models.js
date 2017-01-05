@@ -25,6 +25,16 @@ var itemSchema = new Schema({
     }]
 });
 
+var operatorSchema = new Schema({
+    name: String,
+    depots: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'depots'
+        }
+    ]
+});
+
 var depotSchema = new Schema({
     name: String,
     location: String,
@@ -49,10 +59,22 @@ var companySchema = new Schema({
     items: [itemSchema]
 });
 
+
+var userSchema = new Schema({
+    id: String,
+    username: String,
+    password: String,
+    salt: String,
+    depot: {type: Schema.Types.ObjectId, ref: 'depots'},
+    admin: Boolean //change to admin schema in future
+});
+
 var itemModel = mongoose.model('items', itemSchema);
 var depotModel = mongoose.model('depots', depotSchema);
+var operatorModel = mongoose.model('operators', operatorSchema);
 var productCategoryModel = mongoose.model('productCategories', productCategorySchema);
 var companyModel = mongoose.model('companies', companySchema);
+var userModel = mongoose.model('users', userSchema);
 
 module.exports = {
     getItemModel: function () {
@@ -66,5 +88,11 @@ module.exports = {
     },
     getCompanyModel: function () {
         return companyModel;
+    },
+    getOperatorModel: function () {
+        return operatorModel;
+    },
+    getUserModel: function () {
+        return userModel;
     }
 };

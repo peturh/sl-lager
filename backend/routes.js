@@ -1,8 +1,29 @@
 var depots = require('./depots');
 var items = require('./items');
 var categories = require('./categories');
+var passport = require('passport');
+var users = require('./users');
 
 module.exports = function (app) {
+
+    app.get('/status', function (req, res) {
+        res.send(req.user);
+    });
+
+    app.post('/login',
+        passport.authenticate('local'),
+        function (req, res) {
+            users.getUserByName(req.body.username, function (user) {
+                res.send(user)
+            })
+        });
+
+    app.get('/logout', isLoggedIn, function (req, res) {
+        console.log(req);
+        req.logout();
+        //res.redirect('/');
+        res.send("Logged out")
+    });
 
     /**
      * Gets the available depots
@@ -46,7 +67,7 @@ module.exports = function (app) {
 
     });
 
-    app.get('/productCategories', function (req, res) {
+    app.get('/categories', function (req, res) {
         categories.getProductCategories(function (categories) {
             res.send(categories);
             res.end();
@@ -105,4 +126,20 @@ module.exports = function (app) {
             })
         });
     });
+
+    /**
+     * The authentication checker
+     * @param req - The request object
+     * @param res - The response object
+     * @param next - Callback to continue the route
+     */
+    function isLoggedIn(req, res, next) {
+        if (req.isAuthenticated()) {
+            next();
+        }
+        else {
+            // Method is not allowed, user is not registered
+            res.sendStatus(401);
+        }
+    }
 };
