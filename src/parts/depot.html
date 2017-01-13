@@ -87,7 +87,7 @@
 
             <md-card-actions layout="row" layout-align="space-between center">
                 <md-button  ng-click="depot.deleteItem($event)"
-                           ng-disabled="depot.selectedItem.depotQuantity != 0" class="md-icon-button"
+                           ng-disabled="depot.selectedItem.depotQuantity != 0 && depot.selectedItem.depotQuantity != null " class="md-icon-button"
                            title="Delete item (only possible if quantity is 0 in this depot)"
                            aria-label="Delete item (only possible if quantity is 0 in this depot)">
                     <md-icon ng-class="md-48" md-font-icon>delete</md-icon>

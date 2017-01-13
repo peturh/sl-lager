@@ -26,7 +26,6 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
             depot.originalDepotQuantity = angular.copy(item.depotQuantity);
             depot.originalTotalQuantity = angular.copy(item.item.quantity);
             depot.selectedItem = item;
-
         }
 
         depot.selectItem = function (item) {
@@ -35,6 +34,7 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         };
 
         depot.updateTotalQuantity = function () {
+            console.log(typeof depot.selectedItem.depotQuantity)
             depot.selectedItem.item.quantity = depot.originalTotalQuantity - (depot.originalDepotQuantity - depot.selectedItem.depotQuantity);
         };
 
@@ -65,6 +65,9 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         };
 
         depot.deleteItem = function (ev) {
+            if(depot.selectedItem.depotQuantity === null){
+                depot.selectedItem.depotQuantity = 0;
+            }
 
             DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
                 MessageService.showConfirmMessage('Are you sure you want to delete this item from the depot?', ev, function (deleteItem) {
