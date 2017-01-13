@@ -1,4 +1,5 @@
 // Vendor code
+var _ = require('underscore');
 var angular = require('angular');
 var ngMaterial = require('angular-material');
 var ngAnimate = require('angular-animate');

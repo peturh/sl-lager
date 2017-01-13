@@ -48,7 +48,7 @@ app.service('ItemService', ['$http', function ($http) {
             item: item,
             depotId: depotId
         };
-        console.log(payload);
+        console.log("Payload in service",payload);
         return $http(
             {
                 method: 'POST',
@@ -68,7 +68,7 @@ app.service('ItemService', ['$http', function ($http) {
             item: item,
             depotId: depotId
         };
-        console.log(payload);
+        console.log("Payload in service",payload);
         return $http(
             {
                 method: 'POST',
@@ -88,7 +88,7 @@ app.service('ItemService', ['$http', function ($http) {
         var payload = {
             item: item
         };
-        console.log(payload);
+        console.log("Payload in service",payload);
         return $http(
             {
                 method: 'POST',
@@ -108,7 +108,7 @@ app.service('ItemService', ['$http', function ($http) {
         var payload = {
             item: item
         };
-        console.log(payload);
+        console.log("Payload in service",payload);
         return $http(
             {
                 method: 'POST',

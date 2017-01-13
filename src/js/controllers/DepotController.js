@@ -1,4 +1,5 @@
 var app = require('app');
+var _ = require('underscore');
 
 app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemService', '$stateParams', '$mdDialog', '$mdMedia', 'MessageService',
     function ($scope, $state, DepotService, ItemService, $stateParams, $mdDialog, $mdMedia, MessageService) {
@@ -9,11 +10,11 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
          */
         depot.selectedItem = '';
         depot.init = function () {
-            updateView(function(){
+            updateView(function () {
                 if ($state.params.itemId) {
                     for (var i = 0; i < depot.depot.itemsAndQuantity.length; i++) {
                         if (depot.depot.itemsAndQuantity[i]._id === $state.params.itemId) {
-                            depot.selectedItem = depot.depot.itemsAndQuantity[i];
+                            chooseItem(depot.depot.itemsAndQuantity[i])
                             break;
                         }
                     }
@@ -21,13 +22,16 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
             });
         };
 
-        depot.selectItem = function (item) {
+        function chooseItem(item) {
             depot.originalDepotQuantity = angular.copy(item.depotQuantity);
             depot.originalTotalQuantity = angular.copy(item.item.quantity);
             depot.selectedItem = item;
-            console.log(item);
+
+        }
+
+        depot.selectItem = function (item) {
+            chooseItem(item);
             $state.go('depot.item', {itemId: depot.selectedItem._id});
-            console.log($state)
         };
 
         depot.updateTotalQuantity = function () {
@@ -37,7 +41,8 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         depot.saveUpdatedItem = function () {
             DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
                 MessageService.showToastMessage('Successfully saved updated item.');
-                updateView(function(){});
+                updateView(function () {
+                });
             });
         };
 
@@ -51,7 +56,8 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
                     fullscreen: true
                 })
                 .then(function () {
-                    updateView(function(){});
+                    updateView(function () {
+                    });
                 }, function () {
                     $scope.status = 'You cancelled the dialog.';
                 });
@@ -60,11 +66,13 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
 
         depot.deleteItem = function (ev) {
 
-            DepotService.updateItemInDepot(depot.selectedItem,$stateParams.id).then(function(){
+            DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
                 MessageService.showConfirmMessage('Are you sure you want to delete this item from the depot?', ev, function (deleteItem) {
                     if (deleteItem) {
                         DepotService.deleteItem(depot.selectedItem, $stateParams.id).then(function () {
-                            updateView(function(){});
+                            MessageService.showToastMessage('Successfully deleted item.');
+                            updateView(function () {
+                            });
                             depot.selectedItem = '';
                         })
                     }
@@ -102,29 +110,45 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
     $scope.selectedItem = "";
 
     $scope.init = function () {
-        $scope.items = [];
         //Get all the items that does NOT exist in depot already
+        updateItems();
+    };
+
+    function updateItems() {
+        $scope.items = [];
+
         ItemService.getItems().then(function (response) {
             var allItems = response.data;
+            console.log(allItems)
             DepotService.getDepot($stateParams.id).then(function (response) {
                 var depotItems = response.data[0].itemsAndQuantity;
                 if (depotItems.length === 0) {
+                    console.log("No items in depot, adding all");
                     $scope.items = allItems;
                 }
                 else {
-                    for (var i = 0; i < allItems.length; i++) {
-                        for (var j = 0; j < depotItems.length; j++) {
-                            if (allItems[i]._id !== depotItems[j].item._id) {
-                                $scope.items.push(allItems[i]);
+                    var allItemsIdTempArray = [];
+                    var depotTempIdArray = [];
+                    for (var j = 0; j < allItems.length; j++) {
+                        allItemsIdTempArray.push(allItems[j]._id)
+                    }
+                    for (var i = 0; i < depotItems.length; i++) {
+                        depotTempIdArray.push(depotItems[i].item._id);
+                    }
+                    var exclusive = _.difference(allItemsIdTempArray, depotTempIdArray);
+
+                    for (var l = 0; l < exclusive.length; l++) {
+                        for (var k = 0; k < allItems.length; k++) {
+                            if (exclusive[l] === allItems[k]._id) {
+                                $scope.items.push(allItems[k]);
                             }
                         }
                     }
                 }
 
             })
-
         });
-    };
+    }
 
     $scope.hide = function () {
         $mdDialog.hide();
@@ -141,12 +165,12 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
 
     $scope.addExistingItem = function (close) {
         $scope.selectedItem.quantity = $scope.selectedItem.quantity + $scope.selectedItem.depotQuantity;
-        console.log($scope.selectedItem);
         ItemService.addExistingItemToDepot($scope.selectedItem, $stateParams.id).then(function () {
             if (close) {
                 $mdDialog.hide();
             }
             else {
+                updateItems();
                 $scope.selectedItem = "";
             }
         })
