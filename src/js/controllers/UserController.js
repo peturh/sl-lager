@@ -15,6 +15,13 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
         user.repeatNewEmail = "";
         user.oldEmail = "";
 
+
+        user.registerUser = {
+            username: "",
+            password: "",
+            email: ""
+        };
+
         user.oldPassword = "";
         user.newPassword = "";
         user.repeatNewPassword = "";
@@ -105,6 +112,22 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
                 );
             }
         };
+
+        user.register = function (event,user) {
+            UserService.register(user).then(function (response) {
+                UserService.login(user).then(function (response) {
+                    MessageService.showDialogMessage("You have successfully registered a user. However, you need to assign a depot the user before the user can login.",event);
+                    login.registerUser = {
+                        username: "",
+                        password: "",
+                        email: ""
+                    };
+                });
+            },function(error){
+                MessageService.showToastError("Could not register, username already exists.");
+            })
+        };
+
 
         user.changeEmail = function (newEmail, repeatNewEmail, ev) {
 

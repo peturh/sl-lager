@@ -87,7 +87,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 $timeout(function () {
                     // This code runs after the authentication promise has been rejected.
                     // Go to the log-in page
-                    $state.go('screen', {screenId: UserService.user.screen.id});
+                    $state.go('depot', {id: UserService.user.depot});
                 });
                 return $q.reject()
             }

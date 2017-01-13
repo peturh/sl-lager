@@ -1,16 +1,17 @@
 <div layout="column" class="fixed-toolbar">
-    <md-toolbar id="toolbar" class="md-whiteframe-z1" layout="row">
+    <md-toolbar id="toolbar" class="md-whiteframe-z1" layout="row" ng-if="main.isLoggedIn()">
         <div class="md-toolbar-tools">
-            <md-button menu-button class="menu-btn" ng-click="main.toggleSidenav('left')">
+            <md-button menu-button class="menu-btn" ng-click="main.toggleSidenav('left')" ng-if="main.isLoggedIn()">
                 <md-icon md-font-icon="material-icons inherit">menu</md-icon>
             </md-button>
             <div>
-               <h1>SL - Lager</h1>
+                <h1>SL - Lager</h1>
             </div>
         </div>
-<span flex></span>
+        <span flex></span>
         <md-button class="md-raised " ng-click="main.logout($event)" ng-if="main.isLoggedIn()">
             Log out
         </md-button>
+
     </md-toolbar>
 </div>

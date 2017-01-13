@@ -9,7 +9,7 @@
         </div>
         <md-list>
             <md-divider></md-divider>
-            <md-list-item md-ink-ripple ui-sref-active='active-menu-link'>
+            <md-list-item md-ink-ripple ui-sref-active='active-menu-link' ng-if="main.isLoggedIn()">
                 <div class="menu-item"
                      layout="row"
                      layout-align="start center"
@@ -23,7 +23,7 @@
                 </div>
             </md-list-item>
             <md-divider></md-divider>
-            <md-list-item md-ink-ripple ui-sref-active='active-menu-link'>
+            <md-list-item md-ink-ripple ui-sref-active='active-menu-link' ng-if="main.isAdmin()">
                 <div class="menu-item"
                      layout="row"
                      layout-align="start center"
@@ -37,7 +37,7 @@
                 </div>
             </md-list-item>
             <md-divider></md-divider>
-            <md-list-item md-ink-ripple ui-sref-active='active-menu-link'>
+            <md-list-item md-ink-ripple ui-sref-active='active-menu-link' ng-if="main.isLoggedIn()">
                 <div    class="menu-item"
                         layout="row"
                         layout-align="start center"

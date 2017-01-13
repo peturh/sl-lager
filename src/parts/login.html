@@ -35,42 +35,4 @@
             </md-card-actions>
         </form>
     </md-card>
-
-    <md-card>
-        <md-toolbar class="layout-padding">
-            <div class="md-toolbar-tools">
-                <h2>
-                    <md-icon md-font-set="fa">&#xf234</md-icon>
-                    <span>Register User</span></h2>
-                <span flex></span>
-            </div>
-        </md-toolbar>
-        <form name="registerUser" novalidate>
-            <md-card-content>
-                <div>
-                <md-input-container class="md-accent">
-                    <label>Username</label>
-                    <input type="text" ng-model="login.registerUser.username" required>
-                </md-input-container>
-                </div>
-                <div>
-                <md-input-container class="md-accent">
-                    <label>Password</label>
-                    <input type="password" ng-model="login.registerUser.password" minlength="5" required>
-                </md-input-container>
-                </div>
-                <md-input-container class="md-accent">
-                    <label>Email</label>
-                    <input type="email" ng-model="login.registerUser.email" required>
-                </md-input-container>
-            </md-card-content>
-
-            <md-card-actions layout="row" layout-align="end">
-                <md-button type="submit" ng-disabled="registerUser.$invalid" ng-click="login.register($event,login.registerUser)"
-                           class="md-accent md-raised">
-                    Register User
-                </md-button>
-            </md-card-actions>
-        </form>
-    </md-card>
 </div>

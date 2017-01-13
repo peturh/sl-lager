@@ -28,9 +28,9 @@ module.exports = {
 
     },
     updateItemInDepot: function (item, depotId, callback) {
-
+        console.log(depotId);
         depots.findOneAndUpdate({
-                id: depotId,
+                _id: depotId,
                 "itemsAndQuantity._id": item._id
             },//set and push these values
             {
@@ -73,7 +73,7 @@ module.exports = {
             history: [{quantity: quantity}]
         };
 
-        depots.update({id: depotId}, {$push: {"itemsAndQuantity": itemsAndQuantity}},
+        depots.update({_id: depotId}, {$push: {"itemsAndQuantity": itemsAndQuantity}},
             function (err, depot) {
                 if (err) {
                     console.log("error");
@@ -86,7 +86,7 @@ module.exports = {
             });
     },
     getDepot: function (id, callback) {
-        depots.find({id: id}).populate('itemsAndQuantity.item').exec(function (err, depot) {
+        depots.find({_id: id}).populate('itemsAndQuantity.item').exec(function (err, depot) {
             if (err) {
                 return callback(err);
             }

@@ -70,6 +70,7 @@ app.service('DepotService', ['$http', function ($http) {
         var item = {
             item : updatedItem
         };
+        console.log("OH")
         return $http(
             {
                 method: 'POST',

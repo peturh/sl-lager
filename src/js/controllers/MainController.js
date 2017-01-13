@@ -1,7 +1,7 @@
 var app = require('app');
 
-app.controller('MainController', ['$scope', 'DepotService', '$mdSidenav', '$state', '$mdDialog','MessageService','UserService',
-    function ($scope, DepotService, $mdSidenav, $state, $mdDialog,MessageService,UserService) {
+app.controller('MainController', ['$scope', 'DepotService', '$mdSidenav', '$state', '$mdDialog', 'MessageService', 'UserService',
+    function ($scope, DepotService, $mdSidenav, $state, $mdDialog, MessageService, UserService) {
         var main = this;
 
         /**
@@ -41,19 +41,19 @@ app.controller('MainController', ['$scope', 'DepotService', '$mdSidenav', '$stat
             });
         };
 
-        main.editDepot = function(depot){
+        main.editDepot = function (depot) {
             main.selectedDepot = depot;
         };
 
-        main.saveUpdatedDepot = function(){
-            DepotService.updateDepot(main.selectedDepot).then(function(){
+        main.saveUpdatedDepot = function () {
+            DepotService.updateDepot(main.selectedDepot).then(function () {
                 updateView();
             })
         };
 
-        main.deleteDepot = function(){
+        main.deleteDepot = function () {
             console.log(main.selectedDepot);
-            DepotService.deleteDepot(main.selectedDepot).then(function(){
+            DepotService.deleteDepot(main.selectedDepot).then(function () {
                 updateView();
                 main.selectedDepot = '';
                 MessageService.showToastMessage('Successfully deleted depot');

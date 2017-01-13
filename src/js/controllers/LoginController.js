@@ -9,11 +9,6 @@ app.controller('LoginController', ['$state', 'UserService', 'MessageService',
             password: ""
         };
 
-        login.registerUser = {
-            username: "",
-            password: "",
-            email: ""
-        };
 
 
         login.loginUserFn = function (event, user) {
@@ -32,22 +27,6 @@ app.controller('LoginController', ['$state', 'UserService', 'MessageService',
             },function(error){
                 MessageService.showToastError("Wrong username or password!");
             });
-        };
-
-
-        login.register = function (event,user) {
-            UserService.register(user).then(function (response) {
-                UserService.login(user).then(function (response) {
-                    MessageService.showDialogMessage("You have successfully registered. However, you need to contact an administrator to get a depot assigned to you before you can continue.",event);
-                    login.registerUser = {
-                        username: "",
-                        password: "",
-                        email: ""
-                    };
-                });
-            },function(error){
-                MessageService.showToastError("Could not register, username already exists.");
-            })
         };
 
         login.getStatus = function () {

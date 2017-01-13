@@ -40,14 +40,18 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         };
 
         depot.saveUpdatedItem = function () {
-            if(depot.selectedItem.depotQuantity == null){
+            console.log("AWE")
+            if (depot.selectedItem.depotQuantity == null) {
                 depot.selectedItem.depotQuantity = 0;
-                DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
-                    MessageService.showToastMessage('Successfully saved updated item.');
-                    updateView(function () {
-                    });
-                });
             }
+            console.log($stateParams.id);
+            console.log(depot.selectedItem)
+            DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
+                MessageService.showToastMessage('Successfully saved updated item.');
+                updateView(function () {
+                });
+            });
+
 
         };
 
