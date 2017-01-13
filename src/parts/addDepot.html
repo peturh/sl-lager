@@ -24,11 +24,13 @@
                         </md-input-container>
                     </div>
                     <div layout="row" layout-align="end center">
+                        <md-button ng-click="hide()" title="Close dialog">
+                            Cancel
+                        </md-button>
                         <md-button ng-click="addNewDepot()" title="Add this item and this dialog closes"
                                    class="md-raised" ng-disabled="newDepotForm.$invalid">
                             Add depot
                         </md-button>
-
                     </div>
                 </form>
             </md-card>

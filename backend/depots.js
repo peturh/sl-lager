@@ -17,7 +17,7 @@ module.exports = {
     },
 
     getDepots: function (callback) {
-        depots.find({}, {itemsAndQuantity: 0}).exec(function (err, depots) {
+        depots.find({}).exec(function (err, depots) {
             if (err) {
                 return callback(err);
             }
@@ -108,15 +108,25 @@ module.exports = {
 
         })
     },
-    getAllDepotsWithItem : function(itemId,callback){
+    getAllDepotsWithItem: function (itemId, callback) {
         console.log(itemId)
-        depots.find({"itemsAndQuantity.item": itemId}).exec(function(err,depots){
-            if(err){
+        depots.find({"itemsAndQuantity.item": itemId}).exec(function (err, depots) {
+            if (err) {
                 callback(err);
             }
-            else{
-                console.log("HEJ",depots)
+            else {
+                console.log("HEJ", depots)
                 callback(depots);
+            }
+        })
+    },
+    deleteDepot: function (id, callback) {
+        depots.find({_id: id}).remove().exec(function (err) {
+            if (err) {
+                callback(err);
+            }
+            else {
+                callback()
             }
         })
     }

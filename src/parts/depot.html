@@ -52,6 +52,7 @@
                     <span flex></span>
                 </div>
             </md-toolbar>
+            <form name="itemInDepot">
             <md-card-content>
                 <div>
                     <md-input-container>
@@ -73,7 +74,7 @@
                             Quantity
                         </label>
                         <input type="number" ng-change="depot.updateTotalQuantity()"
-                               ng-model="depot.selectedItem.depotQuantity">
+                               ng-model="depot.selectedItem.depotQuantity" ng-required>
                     </md-input-container>
 
                     <md-input-container>
@@ -87,17 +88,18 @@
 
             <md-card-actions layout="row" layout-align="space-between center">
                 <md-button  ng-click="depot.deleteItem($event)"
-                           ng-disabled="depot.selectedItem.depotQuantity != 0 && depot.selectedItem.depotQuantity != null " class="md-icon-button"
+                           ng-disabled="(depot.selectedItem.depotQuantity != 0 && depot.selectedItem.depotQuantity != null) || itemInDepot.$invalid" class="md-icon-button"
                            title="Delete item (only possible if quantity is 0 in this depot)"
                            aria-label="Delete item (only possible if quantity is 0 in this depot)">
                     <md-icon ng-class="md-48" md-font-icon>delete</md-icon>
                 </md-button>
 
-                <md-button  ng-click="depot.saveUpdatedItem($event)" class="md-icon-button" title="Save updated item"
+                <md-button ng-disabled="itemInDepot.$invalid"  ng-click="depot.saveUpdatedItem($event)" class="md-icon-button" title="Save updated item"
                            aria-label="Save updated item">
                     <md-icon ng-class="md-48" md-font-icon>save</md-icon>
                 </md-button>
             </md-card-actions>
+            </form>
         </md-card>
 
         <md-card>

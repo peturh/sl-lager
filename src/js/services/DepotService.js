@@ -125,5 +125,20 @@ app.service('DepotService', ['$http', function ($http) {
 
     };
 
+    service.deleteDepot = function(depot){
+        var depotId = depot._id;
+        return $http(
+            {
+                method: 'GET',
+                url: "/deleteDepot/"+depotId})
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
+
     return service;
 }]);

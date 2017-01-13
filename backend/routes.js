@@ -168,6 +168,14 @@ module.exports = function (app) {
         })
     });
 
+    app.get('/deleteDepot/:id',function(req,res){
+        console.log("HAY")
+        var depotId = req.params.id;
+        depots.deleteDepot(depotId,function(){
+            res.end();
+        })
+    });
+
     /**
      * The authentication checker
      * @param req - The request object

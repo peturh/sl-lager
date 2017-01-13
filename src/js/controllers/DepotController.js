@@ -34,16 +34,21 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         };
 
         depot.updateTotalQuantity = function () {
-            console.log(typeof depot.selectedItem.depotQuantity)
-            depot.selectedItem.item.quantity = depot.originalTotalQuantity - (depot.originalDepotQuantity - depot.selectedItem.depotQuantity);
+            if (typeof depot.selectedItem.depotQuantity !== 'undefined') {
+                depot.selectedItem.item.quantity = depot.originalTotalQuantity - (depot.originalDepotQuantity - depot.selectedItem.depotQuantity);
+            }
         };
 
         depot.saveUpdatedItem = function () {
-            DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
-                MessageService.showToastMessage('Successfully saved updated item.');
-                updateView(function () {
+            if(depot.selectedItem.depotQuantity == null){
+                depot.selectedItem.depotQuantity = 0;
+                DepotService.updateItemInDepot(depot.selectedItem, $stateParams.id).then(function () {
+                    MessageService.showToastMessage('Successfully saved updated item.');
+                    updateView(function () {
+                    });
                 });
-            });
+            }
+
         };
 
         depot.addItem = function (ev) {
@@ -65,7 +70,7 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
         };
 
         depot.deleteItem = function (ev) {
-            if(depot.selectedItem.depotQuantity === null){
+            if (depot.selectedItem.depotQuantity === null) {
                 depot.selectedItem.depotQuantity = 0;
             }
 
@@ -122,7 +127,6 @@ function AddNewItemController($scope, $mdDialog, ItemService, DepotService, $sta
 
         ItemService.getItems().then(function (response) {
             var allItems = response.data;
-            console.log(allItems)
             DepotService.getDepot($stateParams.id).then(function (response) {
                 var depotItems = response.data[0].itemsAndQuantity;
                 if (depotItems.length === 0) {

@@ -44,6 +44,9 @@
                     </div>-->
                 </div>
                 <div layout="row" layout-align="end center">
+                    <md-button ng-click="hide()" title="Close dialog">
+                        Cancel
+                    </md-button>
                     <md-button ng-click="addNewItem(true)" title="Add this item and this dialog closes"
                                class="md-raised" ng-disabled="newItemForm.$invalid">
                         Add item
@@ -86,7 +89,9 @@
                     <p>There are no items in other depots that this depot already has, or there are no available items.</p>
                 </div>
                 <div layout="row" layout-align="end center">
-
+                    <md-button ng-click="hide()" title="Close dialog">
+                        Cancel
+                    </md-button>
                     <md-button title="Add this item and this dialog closes" class="md-raised"
                                ng-click="addExistingItem(true)"
                                ng-disabled="addFromListForm.$invalid || selectedItem == ''">

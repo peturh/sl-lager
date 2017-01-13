@@ -61,15 +61,24 @@
                         </label>
                         <input ng-model="main.selectedDepot.location">
                     </md-input-container>
+                    <md-input-container>
+                        <label>Number of different items in depot</label>
+                        <input ng-disabled="true" ng-model="main.selectedDepot.itemsAndQuantity.length">
+                    </md-input-container>
                 </div>
             </md-card-content>
 
-            <md-card-actions layout="row" layout-align="end center">
+            <md-card-actions layout="row" layout-align="space-between center">
+                <md-button ng-click="main.deleteDepot($event)" class="md-icon-button" title="Delete depot (Only possible if no items in depot)"
+                           aria-label="Delete depot" ng-disabled="main.selectedDepot.itemsAndQuantity.length != 0">
+                    <md-icon ng-class="md-48" md-font-icon>delete</md-icon>
+                </md-button>
                 <md-button ng-click="main.saveUpdatedDepot($event)" class="md-icon-button" title="Save updated depot"
                            aria-label="Save updated depot">
                     <md-icon ng-class="md-48" md-font-icon>save</md-icon>
                 </md-button>
             </md-card-actions>
+
         </md-card>
     </div>
 </div>
