@@ -12,7 +12,6 @@ var itemSchema = new Schema({
     quantity: Number,
     name: String,
     description: String,
-    id: String,
     externalId: String,
     dateCreated: {
         default: Date.now,
@@ -38,7 +37,6 @@ var operatorSchema = new Schema({
 var depotSchema = new Schema({
     name: String,
     location: String,
-    id: String,
     itemsAndQuantity: [
         {
             item: {

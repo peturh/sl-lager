@@ -30,7 +30,7 @@ module.exports = function (app) {
      * Get all users
      */
     app.get('/users/', isLoggedIn, function (req, res) {
-        userDb.getUsers(function (users) {
+        users.getUsers(function (users) {
             res.send(users);
         })
     });
@@ -44,6 +44,26 @@ module.exports = function (app) {
     app.post('/user/changeEmail', isLoggedIn, function (req, res) {
         users.changeEmail(req.body, function (user) {
             res.send(user);
+        })
+    });
+
+    app.post('/registerUser', function (req, res) {
+        console.log("gets registerUser");
+        users.registerUser(req.body, function (registered) {
+            if(registered){
+                res.send();
+            }
+            else{
+                res.sendStatus(409)
+            }
+        })
+    });
+    app.post('/assignDepotToUser',function(req,res){
+        var userId = req.body.userId;
+        var depot = req.body.depot;
+        console.log(userId)
+        users.registerDepotOnUser(userId,depot,function(){
+            res.end();
         })
     });
 

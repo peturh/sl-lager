@@ -106,17 +106,16 @@ app.service('UserService', ['$http', function ($http) {
             });
     };
 
-    service.assignScreenToUser = function (userId, screenId) {
-        var data = {
-            screenId: screenId,
+    service.assignDepotToUser = function (userId, depot) {
+        var payload = {
+            depot: depot,
             userId: userId
         };
-        console.log(data);
         return $http(
             {
                 method: 'POST',
-                url: "/user/setscreen",
-                data: data
+                url: "/assignDepotToUser",
+                data: payload
             })
             .success(function (data, status) {
                 return data;

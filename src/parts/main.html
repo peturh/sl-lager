@@ -12,7 +12,7 @@
             <md-list>
                 <div ng-repeat="depot in main.depots">
                     <md-list-item class="md-2-line"
-                                  ng-click="main.selectDepot(depot.id)"
+                                  ng-click="main.selectDepot(depot._id)"
                                   ng-class='{ "active": main.selectedDepot._id==depot._id}'>
                         <md-icon class="md-avatar" md-font-icon>near_me</md-icon>
                         <div class="md-list-item-text" layout="column">

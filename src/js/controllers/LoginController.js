@@ -26,7 +26,7 @@ app.controller('LoginController', ['$state', 'UserService', 'MessageService',
                     $state.go('/');
                 }
                 else if(UserService.user && !UserService.user.depot){
-                    MessageService.showDialogMessage("You don't have a screen assigned. Please contact the administrator.",event);
+                    MessageService.showDialogMessage("You don't have a depot assigned. Please contact the administrator.",event);
                 }
 
             },function(error){
@@ -38,7 +38,7 @@ app.controller('LoginController', ['$state', 'UserService', 'MessageService',
         login.register = function (event,user) {
             UserService.register(user).then(function (response) {
                 UserService.login(user).then(function (response) {
-                    MessageService.showDialogMessage("You have successfully registered. However, you need to contact an administrator to get a screen assigned to you before you can continue.",event);
+                    MessageService.showDialogMessage("You have successfully registered. However, you need to contact an administrator to get a depot assigned to you before you can continue.",event);
                     login.registerUser = {
                         username: "",
                         password: "",

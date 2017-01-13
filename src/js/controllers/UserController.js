@@ -21,12 +21,47 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
 
         user.init = function () {
             UserService.getLoginStatus().then(function (response) {
+                user.email = response.data.email;
+            });
+            UserService.getUsers().then(function (response) {
+                user.users = response.data;
+                console.log(response.data);
+            })
 
-                    user.email = response.data.email;
+        };
 
-                }
-            )
+        function updateView(){
+            UserService.getLoginStatus().then(function (response) {
+                user.email = response.data.email;
+            });
+            UserService.getUsers().then(function (response) {
+                user.users = response.data;
+                console.log(response.data);
+            })
 
+        }
+
+        user.hello = function()  {
+            console.log("HLLO");
+        }
+
+        user.showDepotDialog = function (ev, userId) {
+            $mdDialog.show({
+                    controller: ['$scope', '$mdDialog', 'DepotService', DepotSelectionController],
+                    templateUrl: 'depotSelection.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    fullscreen: true
+                })
+                .then(function (depot) {
+                    UserService.assignDepotToUser(userId, depot).then(function (response) {
+                        console.log(response.data);
+                    });
+                    updateView();
+                }, function () {
+                    $scope.status = 'You cancelled the dialog.';
+                });
         };
 
         user.changePassword = function (oldPassword, newPassword, repeatNewPassword, ev) {
@@ -121,3 +156,22 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
 
 
     }]);
+
+
+function DepotSelectionController($scope, $mdDialog, DepotService) {
+
+    $scope.init = function () {
+        DepotService.getDepots().then(function (response) {
+            $scope.depots = response.data;
+        });
+    };
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+    $scope.assignDepot = function (depot) {
+        $mdDialog.hide(depot);
+    };
+}

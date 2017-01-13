@@ -15,32 +15,44 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             url: '/',
             templateUrl: 'main.html',
             controller: 'MainController',
-            controllerAs: 'main'
+            controllerAs: 'main',
+            resolve : {
+                authenticate :['$q', 'UserService', '$state', '$timeout', authenticateAdmin]
+            }
         })
         .state('depot', {
             url: '/depot/:id',
             templateUrl: 'depot.html',
             controller: 'DepotController',
-            controllerAs: 'depot'
+            controllerAs: 'depot',
+            resolve: {
+                authenticate: ['$q', 'UserService', '$state', '$timeout', authenticateUser]
+            }
         })
         .state('depot.item',{
             url: '/item/:itemId',
             templateUrl: 'depot.html',
             controller: 'DepotController',
-            controllerAs: 'depot'
+            controllerAs: 'depot',
+            resolve: {
+                authenticate: ['$q', 'UserService', '$state', '$timeout', authenticateUser]
+            }
         })
         .state('items', {
             url: '/items/:id',
             templateUrl: 'item.html',
             controller: 'ItemController',
-            controllerAs: 'itemCtrl'
-        })
+            controllerAs: 'itemCtrl',
+            resolve : {
+                authenticate :['$q', 'UserService', '$state', '$timeout', authenticateAdmin]
+            }
+        })/*
         .state('categories', {
             url: '/categories/',
             templateUrl: 'category.html',
             controller: 'CategoryController',
             controllerAs: 'category'
-        })
+        })*/
         .state('settings', {
             url: '/settings',
             templateUrl: 'userSettings.html',

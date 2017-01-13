@@ -50,7 +50,7 @@ module.exports = {
 
     deleteItemInDepot: function (item, depotId, callback) {
         depots.findOneAndUpdate({
-                id: depotId
+                _id: depotId
             },
             {
                 $pull: {"itemsAndQuantity": {_id: item._id}}
@@ -96,7 +96,6 @@ module.exports = {
         })
     },
     addDepot: function (depot, callback) {
-        depot.id = uuid.v4();
         var newDepot = new depots(depot);
         newDepot.save(function (err, depot) {
             if (err) {
@@ -115,7 +114,6 @@ module.exports = {
                 callback(err);
             }
             else {
-                console.log("HEJ", depots)
                 callback(depots);
             }
         })

@@ -1,0 +1,34 @@
+<md-dialog aria-label="Select depot" ng-init="init()" class="fullscreen">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Assign depot to user</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon  aria-label="Close dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-list>
+                    <md-subheader class="md-no-sticky">Available depots</md-subheader>
+                    <div ng-repeat="depot in depots">
+                        <md-list-item class="md-2-line" ng-click="assignDepot(depot)">
+                            <md-icon class="md-avatar" md-font-icon>near_me</md-icon>
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{depot.name}}</h3>
+                                <h4>{{depot.location}}</h4>
+                            </div>
+                        </md-list-item>
+                    </div>
+                </md-list>
+            </div>
+            <div layout="row" layout-align="end center">
+                <md-button ng-click="hide()" title="Close dialog">
+                    Cancel
+                </md-button>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

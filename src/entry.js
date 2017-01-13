@@ -26,7 +26,6 @@ var UserController = require('controllers/UserController');
 var ChartDirective = require('directives/Chart');
 
 //Services
-var APIService = require('services/APIService');
 var DepotService = require('services/DepotService');
 var ItemService = require('services/ItemService');
 var CategoryService = require('services/CategoryService');
@@ -47,6 +46,7 @@ var AddDepot = require('addDepot.html');
 var AddCategory = require('addCategory.html');
 var Login = require('login.html');
 var userSettings = require('userSettings.html');
+var depotSelection = require('depotSelection.html');
 
 var materialcss = require('angular-material/angular-material.min.css');
 var stylesheetsLess = require('stylesheets.less');
