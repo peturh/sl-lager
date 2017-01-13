@@ -183,36 +183,5 @@ app.service('UserService', ['$http', function ($http) {
             });
     };
 
-    service.getOutlookAuthURL = function(){
-        return $http(
-            {
-                method: 'GET',
-                url: "/outlook/url"
-            })
-            .success(function (data, status) {
-                return data;
-            })
-            .error(function (data, status) {
-                console.log("failed", data);
-                return "Request failed";
-            });
-    };
-
-    service.getOutlookCalendar = function(){
-        return $http(
-            {
-                method: 'GET',
-                url: "/outlook/calendar"
-            })
-            .success(function (data, status) {
-                return data;
-            })
-            .error(function (data, status) {
-                console.log("failed", data);
-                return "Request failed";
-            });
-    };
-
-
     return service;
 }]);

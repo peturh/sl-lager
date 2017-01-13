@@ -8,7 +8,7 @@ var app = require('app');
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     //
     // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/login");
     // Now set up the states
     $stateProvider
         .state('/', {
@@ -40,7 +40,28 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             templateUrl: 'category.html',
             controller: 'CategoryController',
             controllerAs: 'category'
+        })
+        .state('settings', {
+            url: '/settings',
+            templateUrl: 'userSettings.html',
+            controller: 'UserController',
+            controllerAs: 'user',
+            resolve: {
+                authenticate: ['$q', 'UserService', '$state', '$timeout', authenticateUser]
+            }
+
+        })
+
+        .state('login', {
+            url: '/login',
+            templateUrl: 'login.html',
+            controller: 'LoginController',
+            controllerAs: 'login',
+            resolve: {
+                authenticate: ['$q', 'UserService', '$state', '$timeout', alreadyLoggedIn]
+            }
         });
+    ;
 
 
     /**

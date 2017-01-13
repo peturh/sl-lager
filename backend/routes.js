@@ -25,6 +25,28 @@ module.exports = function (app) {
         res.send("Logged out")
     });
 
+
+    /**
+     * Get all users
+     */
+    app.get('/users/', isLoggedIn, function (req, res) {
+        userDb.getUsers(function (users) {
+            res.send(users);
+        })
+    });
+
+    app.post('/user/changePassword', isLoggedIn, function (req, res) {
+        users.changePassword(req.body, function (user) {
+            res.send(user);
+        })
+    });
+
+    app.post('/user/changeEmail', isLoggedIn, function (req, res) {
+        users.changeEmail(req.body, function (user) {
+            res.send(user);
+        })
+    });
+
     /**
      * Gets the available depots
      */
@@ -173,6 +195,24 @@ module.exports = function (app) {
         var depotId = req.params.id;
         depots.deleteDepot(depotId,function(){
             res.end();
+        })
+    });
+
+    app.get('/initiateDatabase', function(req,res) {
+       var adminUser = {
+           username : "admin",
+           password: "admin",
+           admin : true
+       };
+        users.registerUser(adminUser,function(user){
+            if(user){
+                res.send("Successfully created admin with password admin");
+                res.end();
+            }
+            else{
+                res.status(405).send("Error");
+            }
+
         })
     });
 

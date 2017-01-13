@@ -69,7 +69,8 @@ module.exports = {
                         password: SHA512(salt + theUser.password),
                         salt: salt,
                         email: theUser.email,
-                        id: uuid.v4()
+                        id: uuid.v4(),
+                        admin : theUser.admin
                     });
                     user.save(function (error) {
                         if (error) {
@@ -91,16 +92,12 @@ module.exports = {
         });
 
     },
-    registerDepotOnUser: function (userId, screenId, callback) {
+    registerDepotOnUser: function (userId, depotId, callback) {
         //todo: remove old users screen
-        screenModel.findOneAndUpdate({id: screenId}, {free: false}, function (error, screen) {
-            if (error) {
-                callback(error);
-            }
-            else {
+
                 console.log("Screen",screen);
                 console.log("Screen ID: ",screenId);
-                userModel.findOneAndUpdate({id: userId}, {screen: screen},
+                userModel.findOneAndUpdate({id: userId}, {depot: depotId},
                     function (error, updatedUser) {
                         if (error) {
                             console.log("Error", error);
@@ -110,8 +107,8 @@ module.exports = {
                             callback(updatedUser);
                         }
                     });
-            }
-        });
+
+
     },
     getUser: function (id, callback) {
         userModel.findOne({id: id}, {password: 0, salt: 0}, function (error, user) {

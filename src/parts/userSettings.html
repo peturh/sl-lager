@@ -1,0 +1,78 @@
+<div layout="column" flex="100" ng-init="user.init()">
+
+    <md-card flex="100">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-icon>vpn_key</md-icon>
+                <h2 class="layout-padding"><span>Change password</span></h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-card-content>
+            <form name="changePasswordForm"  layout="column">
+                <md-input-container class="md-accent">
+                    <label>Old password</label>
+                    <input type="password" ng-model="user.oldPassword" required>
+                </md-input-container>
+
+
+                <md-input-container class="md-accent">
+                    <label>New password</label>
+                    <input type="password" ng-model="user.newPassword" required>
+                </md-input-container>
+
+
+                <md-input-container class="md-accent">
+                    <label>Repeat new password</label>
+                    <input type="password" ng-model="user.repeatNewPassword" required>
+                </md-input-container>
+
+                <md-card-actions layout="row" layout-align="end">
+                    <md-button ng-disabled="changePasswordForm.$invalid"
+                            ng-click="user.changePassword(user.oldPassword,user.newPassword,user.repeatNewPassword,$event)"
+                            class="md-accent md-raised">Change password
+                    </md-button>
+                </md-card-actions>
+            </form>
+
+        </md-card-content>
+
+    </md-card>
+
+
+    <md-card flex="100">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-icon>email</md-icon>
+                <h2 class="layout-padding"><span>Change email</span></h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <form name="changeEmailForm" layout="column">
+                <md-input-container  class="md-accent">
+                    <label>Current email</label>
+                    <input disabled type="email" ng-model="user.email">
+                </md-input-container>
+
+                <md-input-container  class="md-accent">
+                    <label>New email</label>
+                    <input type="email" ng-model="user.newEmail" required>
+                </md-input-container>
+
+                <md-input-container  class="md-accent">
+                    <label>Repeat new email</label>
+                    <input type="email" ng-model="user.repeatNewEmail" required>
+                </md-input-container>
+
+                <md-card-actions layout="row" layout-align="end">
+                    <md-button ng-disabled="changeEmailForm.$invalid"
+                            ng-click="user.changeEmail(user.newEmail,user.repeatNewEmail,$event)"
+                               class="md-accent md-raised">Change email
+                    </md-button>
+                </md-card-actions>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

@@ -4,7 +4,8 @@ const request = require('request');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+const users = require('./backend/users');
 
 
 const app = express();
@@ -21,7 +22,7 @@ app.use(passport.session());
 
 
 passport.use(new LocalStrategy(function (username, password, done) {
-    userDb.login(username, password, function (error, user, message) {
+    users.login(username, password, function (error, user, message) {
         console.log(user);
         return done(error, user, message);
     });

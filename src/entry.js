@@ -19,6 +19,8 @@ var MainController = require('controllers/MainController');
 var DepotController = require('controllers/DepotController');
 var ItemController = require('controllers/ItemController');
 var CategoryController = require('controllers/CategoryController');
+var LoginController = require('controllers/LoginController');
+var UserController = require('controllers/UserController');
 // Directives
 
 var ChartDirective = require('directives/Chart');
@@ -29,6 +31,8 @@ var DepotService = require('services/DepotService');
 var ItemService = require('services/ItemService');
 var CategoryService = require('services/CategoryService');
 var MessageService = require('services/MessageService');
+var UserService = require('services/UserService');
+
 
 // Templates
 
@@ -41,6 +45,8 @@ var CategoryTemplate = require('category.html');
 var ItemTemplate = require('item.html');
 var AddDepot = require('addDepot.html');
 var AddCategory = require('addCategory.html');
+var Login = require('login.html');
+var userSettings = require('userSettings.html');
 
 var materialcss = require('angular-material/angular-material.min.css');
 var stylesheetsLess = require('stylesheets.less');

@@ -1,7 +1,7 @@
 var app = require('app');
 
-app.controller('MainController', ['$scope', 'DepotService', '$mdSidenav', '$state', '$mdDialog','MessageService',
-    function ($scope, DepotService, $mdSidenav, $state, $mdDialog,MessageService) {
+app.controller('MainController', ['$scope', 'DepotService', '$mdSidenav', '$state', '$mdDialog','MessageService','UserService',
+    function ($scope, DepotService, $mdSidenav, $state, $mdDialog,MessageService,UserService) {
         var main = this;
 
         /**
@@ -22,7 +22,23 @@ app.controller('MainController', ['$scope', 'DepotService', '$mdSidenav', '$stat
         main.openLink = function (link) {
             $state.go(link);
             $mdSidenav("left").toggle();
+        };
 
+        main.isLoggedIn = function () {
+            return UserService.user;
+        };
+
+        main.isAdmin = function () {
+            return UserService.admin;
+        };
+
+        main.logout = function (event) {
+            UserService.logout().then(function () {
+                MessageService.showDialogMessage("Logged out!", event);
+                UserService.user = null;
+                UserService.admin = null;
+                $state.go('login');
+            });
         };
 
         main.editDepot = function(depot){
