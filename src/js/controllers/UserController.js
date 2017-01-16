@@ -6,8 +6,8 @@
  */
 var app = require('app');
 
-app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService',
-    function ($scope, $state, $mdDialog, UserService) {
+app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService','MessageService',
+    function ($scope, $state, $mdDialog, UserService, MessageService) {
         var user = this;
 
 
@@ -117,11 +117,12 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
             UserService.register(user).then(function (response) {
                 UserService.login(user).then(function (response) {
                     MessageService.showDialogMessage("You have successfully registered a user. However, you need to assign a depot the user before the user can login.",event);
-                    login.registerUser = {
+                    user.registerUser = {
                         username: "",
                         password: "",
                         email: ""
                     };
+                    updateView();
                 });
             },function(error){
                 MessageService.showToastError("Could not register, username already exists.");

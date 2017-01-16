@@ -118,11 +118,13 @@ module.exports = {
         })
     },
     getUsers: function (callback) {
-        userModel.find({}, {password: 0, salt: 0}).exec(function (error, users) {
+        console.log("this")
+        userModel.find({}, {password: 0, salt: 0}).populate('depot').exec(function (error, users) {
             if (error) {
                 callback(error);
             }
             else {
+                console.log(users);
                 callback(users);
             }
         });

@@ -14,7 +14,7 @@ app.controller('DepotController', ['$scope', '$state', 'DepotService', 'ItemServ
                 if ($state.params.itemId) {
                     for (var i = 0; i < depot.depot.itemsAndQuantity.length; i++) {
                         if (depot.depot.itemsAndQuantity[i]._id === $state.params.itemId) {
-                            chooseItem(depot.depot.itemsAndQuantity[i])
+                            chooseItem(depot.depot.itemsAndQuantity[i]);
                             break;
                         }
                     }

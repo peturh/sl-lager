@@ -13,6 +13,7 @@ var itemSchema = new Schema({
     name: String,
     description: String,
     externalId: String,
+    price : String,
     dateCreated: {
         default: Date.now,
         type: Date

@@ -18,7 +18,8 @@
                     <div class="inset">
                         <md-icon md-font-icon="material-icons">place</md-icon>
                     </div>
-                    <div class="inset">Change depot</div>
+                    <div class="inset" ng-if="main.isAdmin()">Change depot</div>
+                    <div class="inset" ng-if="!main.isAdmin()">Depot</div>
                     <md-divider></md-divider>
                 </div>
             </md-list-item>
@@ -46,7 +47,7 @@
                     <div class="inset">
                         <md-icon md-font-icon="material-icons">settings</md-icon>
                     </div>
-                    <div class="inset">User Settings</div>
+                    <div class="inset">Settings</div>
                     <md-divider></md-divider>
                 </div>
             </md-list-item>

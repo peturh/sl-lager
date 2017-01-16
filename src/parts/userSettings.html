@@ -14,21 +14,21 @@
                     <md-subheader class="md-no-sticky">Assign depot to user</md-subheader>
                     <md-divider></md-divider>
                     <div ng-repeat="username in user.users">
-                        <md-list-item class="md-2-line custom-list-item" ng-click="user.showDepotDialog($event,username._id)">
+                        <md-list-item class="md-2-line" ng-click="user.showDepotDialog($event,username._id)">
                         <md-icon>face</md-icon>
                         <div class="md-list-item-text" layout="column">
                             <div layout="row">
                                 <div flex-gt-md="20" flex="50" class="list-divider-item">
                                     <h3>{{username.username}}</h3>
-                                    <h4>{{username.email}}</h4>
+                                    <span flex ng-if="username.depot">
+                                        User is assigned to {{username.depot.name}}
+                                    </span>
+                                    <span flex ng-if="!username.depot && !username.admin">
+                                        <i>User has no depot assigned</i>
+                                    </span>
                                 </div>
-                                <div flex ng-if="username.depot">
-                                    <md-icon>near_me</md-icon>
-                                    User has a depot assigned
-                                </div>
-                                <div flex ng-if="!username.depot && !username.admin">
-                                    <i>User has no depot assigned</i>
-                                </div>
+
+
                             </div>
                         </div>
                         <md-divider></md-divider>
@@ -63,10 +63,6 @@
                         <input type="password" ng-model="login.registerUser.password" minlength="5" required>
                     </md-input-container>
                 </div>
-                <md-input-container class="md-accent">
-                    <label>Email</label>
-                    <input type="email" ng-model="login.registerUser.email" required>
-                </md-input-container>
             </md-card-content>
 
             <md-card-actions layout="row" layout-align="end">

@@ -85,8 +85,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
             if (UserService.user) {
                 $timeout(function () {
-                    // This code runs after the authentication promise has been rejected.
-                    // Go to the log-in page
                     $state.go('depot', {id: UserService.user.depot});
                 });
                 return $q.reject()
@@ -102,10 +100,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
         UserService.getLoginStatus().then(function () {
             if (UserService.user) {
-                console.log("is user");
                 return $q.when();
             } else {
-                console.log("not user");
 
                 $timeout(function () {
                     // This code runs after the authentication promise has been rejected.
@@ -123,11 +119,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
         UserService.getLoginStatus().then(function () {
             if (UserService.admin) {
-                console.log("is admin");
                 return $q.when()
             } else {
-                console.log("not admin", $state);
-
                 $timeout(function () {
                     // This code runs after the authentication promise has been rejected.
                     // Go to the log-in page
