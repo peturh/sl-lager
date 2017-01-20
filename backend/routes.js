@@ -47,7 +47,7 @@ module.exports = function (app) {
         })
     });
 
-    app.post('/registerUser', function (req, res) {
+    app.post('/registerUser', isLoggedIn,function (req, res) {
         console.log("gets registerUser");
         users.registerUser(req.body, function (registered) {
             if(registered){
@@ -58,7 +58,7 @@ module.exports = function (app) {
             }
         })
     });
-    app.post('/assignDepotToUser',function(req,res){
+    app.post('/assignDepotToUser',isLoggedIn,function(req,res){
         var userId = req.body.userId;
         var depot = req.body.depot;
         console.log(userId)
@@ -70,7 +70,7 @@ module.exports = function (app) {
     /**
      * Gets the available depots
      */
-    app.get('/depots', function (req, res) {
+    app.get('/depots', isLoggedIn,function (req, res) {
         depots.getDepots(function (depots) {
             if (!depots) {
                 res.status(500).send("Something broke!");
@@ -85,7 +85,7 @@ module.exports = function (app) {
     /**
      * Gets a certain depot
      */
-    app.get('/depot/:id', function (req, res) {
+    app.get('/depot/:id',isLoggedIn, function (req, res) {
         depots.getDepot(req.params.id, function (depot) {
             if (!depot) {
                 res.status(500).send("Something broke!");
@@ -101,7 +101,7 @@ module.exports = function (app) {
     /**
      * Gets all items
      */
-    app.get('/items', function (req, res) {
+    app.get('/items', isLoggedIn,function (req, res) {
         items.getItems(function (items) {
             res.send(items);
             res.end();
@@ -109,7 +109,7 @@ module.exports = function (app) {
 
     });
 
-    app.get('/categories', function (req, res) {
+    app.get('/categories', isLoggedIn,function (req, res) {
         categories.getProductCategories(function (categories) {
             res.send(categories);
             res.end();
@@ -120,7 +120,7 @@ module.exports = function (app) {
     /**
      * Creates new item
      */
-    app.post('/addNewItemToDepot', function (req, res) {
+    app.post('/addNewItemToDepot',isLoggedIn, function (req, res) {
         var item = req.body.item;
         var depotId = req.body.depotId;
         var quantity = req.body.item.quantity;
@@ -136,7 +136,7 @@ module.exports = function (app) {
     });
 
 
-    app.post('/updateItemInDepot/:id', function (req, res) {
+    app.post('/updateItemInDepot/:id',isLoggedIn, function (req, res) {
         var item = req.body.item;
         var depotId = req.params.id;
         console.log("item first", item);
@@ -155,7 +155,7 @@ module.exports = function (app) {
         })
     });
 
-    app.post('/depot/', function (req, res) {
+    app.post('/depot/', isLoggedIn,function (req, res) {
         var depot = req.body.depot;
 
         depots.addDepot(depot,function(){
@@ -164,7 +164,7 @@ module.exports = function (app) {
     });
 
 
-    app.post('/addExistingItemToDepot', function (req, res) {
+    app.post('/addExistingItemToDepot',isLoggedIn, function (req, res) {
         var item = req.body.item;
         var depotQuantity = req.body.item.depotQuantity;
         var depotId = req.body.depotId;
@@ -176,7 +176,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/updateDepot', function (req, res) {
+    app.post('/updateDepot', isLoggedIn,function (req, res) {
         var depot = req.body.depot;
 
         depots.editDepot(depot,function(){
@@ -193,14 +193,21 @@ module.exports = function (app) {
         })
     });
 
-    app.post('/deleteItem', function(req,res){
+    app.post('/deleteItem', isLoggedIn,function(req,res){
         var itemId = req.body.item._id;
         items.removeItem(itemId,function(){
             res.end();
         })
     });
 
-    app.get('/getDepotsWithItem/:id',function(req,res){
+    app.post('/user/changeImage', isLoggedIn,function(req,res){
+        var user = req.body;
+        users.changeImage(user,function(){
+            res.end();
+        })
+    });
+
+    app.get('/getDepotsWithItem/:id',isLoggedIn,function(req,res){
         var itemId = req.params.id;
         console.log("HEY")
 
@@ -210,7 +217,7 @@ module.exports = function (app) {
         })
     });
 
-    app.get('/deleteDepot/:id',function(req,res){
+    app.get('/deleteDepot/:id',isLoggedIn,function(req,res){
         console.log("HAY")
         var depotId = req.params.id;
         depots.deleteDepot(depotId,function(){
@@ -218,7 +225,7 @@ module.exports = function (app) {
         })
     });
 
-    app.get('/initiateDatabase', function(req,res) {
+    app.get('/initiateDatabase',isLoggedIn, function(req,res) {
        var adminUser = {
            username : "admin",
            password: "admin",

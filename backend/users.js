@@ -13,7 +13,7 @@ module.exports = {
      * @param callback - The user object
      */
     getUserByName: function (username, callback) {
-        userModel.findOne({username: username}, {password: 0, salt: 0}).exec(function (error, user) {
+        userModel.findOne({username: username.toLowerCase()}, {password: 0, salt: 0}).exec(function (error, user) {
             if (error) {
                 callback(error)
             }
@@ -32,7 +32,7 @@ module.exports = {
      */
 
     login: function (username, password, done) {
-        userModel.findOne({username: username}, function (error, user) {
+        userModel.findOne({username: username.toLowerCase()}, function (error, user) {
             if (error) {
                 console.log(error);
                 return done(error);
@@ -57,7 +57,7 @@ module.exports = {
      */
     registerUser: function (theUser, callback) {
         console.log(theUser);
-        userModel.findOne({'username': theUser.username}, null, function (error, data) {
+        userModel.findOne({'username': theUser.username.toLowerCase()}, null, function (error, data) {
             if (error) {
                 callback(error);
             }
@@ -65,25 +65,26 @@ module.exports = {
                 if (data === null) {
                     var salt = crypto.lib.WordArray.random(128 / 8);
                     var user = new userModel({
-                        username: theUser.username,
+                        username: theUser.username.toLowerCase(),
                         password: SHA512(salt + theUser.password),
                         salt: salt,
                         email: theUser.email,
-                        admin: theUser.admin
+                        admin: theUser.admin,
+                        image: theUser.image
                     });
                     user.save(function (error) {
                         if (error) {
                             console.log(error);
                         }
                         else {
-                            console.log("Saved user: " + theUser.username + " to db.");
+                            console.log("Saved user: " + theUser.username.toLowerCase() + " to db.");
                         }
                     });
                     callback(true);
                 }
                 //A user with that name existed.
                 else {
-                    console.log("A user with name: " + theUser.username + " existed. Did not register user.");
+                    console.log("A user with name: " + theUser.username.toLowerCase() + " existed. Did not register user.");
                     callback(false);
                 }
             }
@@ -100,7 +101,7 @@ module.exports = {
                     callback(error);
                 }
                 else {
-                    console.log("user",updatedUser);
+                    console.log("user", updatedUser);
                     callback(updatedUser);
                 }
             });
@@ -191,8 +192,20 @@ module.exports = {
                 });
             }
         });
+    },
 
+    changeImage: function (payload, callback) {
+        //Find user with the desired id
 
+        //Get user and update new salt and password
+        userModel.findOneAndUpdate({id: payload.id}, {image: payload.image}, function (error, user) {
+            if (error) {
+                callback(error);
+            }
+            else {
+                //Callback user object
+                callback(user);
+            }
+        });
     }
-
 };

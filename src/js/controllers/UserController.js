@@ -54,7 +54,7 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
 
         user.showDepotDialog = function (ev, userId) {
             $mdDialog.show({
-                    controller: ['$scope', '$mdDialog', 'DepotService', DepotSelectionController],
+                    controller: ['$scope', '$mdDialog', 'DepotService','UserService', DepotSelectionController],
                     templateUrl: 'depotSelection.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
@@ -114,16 +114,9 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
         };
 
         user.register = function (event,user) {
-            UserService.register(user).then(function (response) {
-                UserService.login(user).then(function (response) {
-                    MessageService.showDialogMessage("You have successfully registered a user. However, you need to assign a depot the user before the user can login.",event);
-                    user.registerUser = {
-                        username: "",
-                        password: "",
-                        email: ""
-                    };
-                    updateView();
-                });
+            UserService.register(user).then(function () {
+                MessageService.showDialogMessage("You have successfully registered a user. However, you need to assign a depot the user before the user can login.",event);
+                updateView();
             },function(error){
                 MessageService.showToastError("Could not register, username already exists.");
             })
@@ -182,7 +175,7 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
     }]);
 
 
-function DepotSelectionController($scope, $mdDialog, DepotService) {
+function DepotSelectionController($scope, $mdDialog, DepotService, UserService) {
 
     $scope.init = function () {
         DepotService.getDepots().then(function (response) {
@@ -198,4 +191,10 @@ function DepotSelectionController($scope, $mdDialog, DepotService) {
     $scope.assignDepot = function (depot) {
         $mdDialog.hide(depot);
     };
+    $scope.save = function(){
+        UserService.changeImage(user).then(function(){
+
+        })
+
+    }
 }

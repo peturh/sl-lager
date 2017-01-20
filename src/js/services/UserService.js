@@ -181,6 +181,25 @@ app.service('UserService', ['$http', function ($http) {
                 return "Request failed";
             });
     };
+    service.changeImage = function (user) {
+        var data = {
+            id: user._id,
+            image: user.image
+        };
+        return $http(
+            {
+                method: 'POST',
+                url: "/user/changeImage",
+                data: data
+            })
+            .success(function (data, status) {
+                return data;
+            })
+            .error(function (data, status) {
+                console.log("failed", data);
+                return "Request failed";
+            });
+    };
 
     return service;
 }]);

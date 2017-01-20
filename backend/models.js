@@ -65,7 +65,8 @@ var userSchema = new Schema({
     password: String,
     salt: String,
     depot: {type: Schema.Types.ObjectId, ref: 'depots'},
-    admin: Boolean //change to admin schema in future
+    admin: Boolean, //change to admin schema in future,
+    image : String
 });
 
 var itemModel = mongoose.model('items', itemSchema);
