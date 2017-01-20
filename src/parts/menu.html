@@ -1,7 +1,7 @@
 <md-sidenav
         class="md-sidenav-left sidenav md-whiteframe-z1"
         md-component-id="left" flex>
-    <md-content>
+    <md-content layout-fill>
         <div class="nav-header">
             <div>
                 <img ng-src="{{main.isLoggedIn().image}}" class="big-logo-name">
@@ -39,11 +39,11 @@
             </md-list-item>
             <md-divider></md-divider>
             <md-list-item md-ink-ripple ui-sref-active='active-menu-link' ng-if="main.isLoggedIn()">
-                <div    class="menu-item"
-                        layout="row"
-                        layout-align="start center"
-                        flex
-                        ng-click="main.openLink('settings')">
+                <div class="menu-item"
+                     layout="row"
+                     layout-align="start center"
+                     flex
+                     ng-click="main.openLink('settings')">
                     <div class="inset">
                         <md-icon md-font-icon="material-icons">settings</md-icon>
                     </div>
@@ -66,4 +66,8 @@
             </md-list-item>
             <md-divider></md-divider>-->
         </md-list>
+
+        <div class="powered-by" layout="row" layout-align="center end">
+            <div flex>Powered by <img style="width:60px" src="/assets/mobill.png"></div>
+        </div>
 </md-sidenav>
