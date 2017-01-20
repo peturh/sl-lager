@@ -6,7 +6,7 @@
  */
 var app = require('app');
 
-app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService','MessageService',
+app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService', 'MessageService',
     function ($scope, $state, $mdDialog, UserService, MessageService) {
         var user = this;
 
@@ -37,7 +37,7 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
 
         };
 
-        function updateView(){
+        function updateView() {
             UserService.getLoginStatus().then(function (response) {
                 user.email = response.data.email;
             });
@@ -48,13 +48,11 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
 
         }
 
-        user.hello = function()  {
-            console.log("HLLO");
-        }
 
         user.showDepotDialog = function (ev, userId) {
+            UserService.selectedUser = userId;
             $mdDialog.show({
-                    controller: ['$scope', '$mdDialog', 'DepotService','UserService', DepotSelectionController],
+                    controller: ['$scope', '$mdDialog', 'DepotService', 'UserService', DepotSelectionController],
                     templateUrl: 'depotSelection.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
@@ -113,11 +111,11 @@ app.controller('UserController', ['$scope', '$state', '$mdDialog', 'UserService'
             }
         };
 
-        user.register = function (event,user) {
+        user.register = function (event, user) {
             UserService.register(user).then(function () {
-                MessageService.showDialogMessage("You have successfully registered a user. However, you need to assign a depot the user before the user can login.",event);
+                MessageService.showDialogMessage("You have successfully registered a user. However, you need to assign a depot the user before the user can login.", event);
                 updateView();
-            },function(error){
+            }, function (error) {
                 MessageService.showToastError("Could not register, username already exists.");
             })
         };
@@ -180,6 +178,11 @@ function DepotSelectionController($scope, $mdDialog, DepotService, UserService) 
     $scope.init = function () {
         DepotService.getDepots().then(function (response) {
             $scope.depots = response.data;
+            console.log(UserService.selectedUser);
+            $scope.user = {
+                id: UserService.selectedUser,
+                image: ""
+            }
         });
     };
     $scope.hide = function () {
@@ -191,9 +194,9 @@ function DepotSelectionController($scope, $mdDialog, DepotService, UserService) 
     $scope.assignDepot = function (depot) {
         $mdDialog.hide(depot);
     };
-    $scope.save = function(){
-        UserService.changeImage(user).then(function(){
-
+    $scope.save = function () {
+        UserService.changeImage($scope.user).then(function () {
+            $mdDialog.cancel();
         })
 
     }

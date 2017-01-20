@@ -9,6 +9,7 @@ app.service('UserService', ['$http', function ($http) {
 
     service.user = null;
     service.admin = null;
+    service.selectedUser = null;
 
     service.register = function (credentials) {
         return $http(
@@ -183,7 +184,7 @@ app.service('UserService', ['$http', function ($http) {
     };
     service.changeImage = function (user) {
         var data = {
-            id: user._id,
+            id: user.id,
             image: user.image
         };
         return $http(

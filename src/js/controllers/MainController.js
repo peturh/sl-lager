@@ -25,7 +25,6 @@ app.controller('MainController', ['$scope', 'DepotService', '$mdSidenav', '$stat
         };
 
         main.isLoggedIn = function () {
-            console.log(UserService.user)
             return UserService.user;
         };
 

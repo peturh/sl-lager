@@ -202,6 +202,7 @@ module.exports = function (app) {
 
     app.post('/user/changeImage', isLoggedIn,function(req,res){
         var user = req.body;
+        console.log("USER",user);
         users.changeImage(user,function(){
             res.end();
         })

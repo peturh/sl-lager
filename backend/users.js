@@ -181,7 +181,7 @@ module.exports = {
             //If password entered in user interface is correct, continue
             else {
                 //Get user and update new salt and password
-                userModel.findOneAndUpdate({id: payload.id}, {email: payload.newEmail}, function (error, user) {
+                userModel.findOneAndUpdate({_id: payload.id}, {email: payload.newEmail}, function (error, user) {
                     if (error) {
                         callback(error);
                     }
@@ -196,13 +196,15 @@ module.exports = {
 
     changeImage: function (payload, callback) {
         //Find user with the desired id
-
+        console.log("change image",payload);
         //Get user and update new salt and password
-        userModel.findOneAndUpdate({id: payload.id}, {image: payload.image}, function (error, user) {
+        userModel.findOneAndUpdate({_id: payload.id}, {image: payload.image}, function (error, user) {
             if (error) {
                 callback(error);
             }
             else {
+                console.log(user);
+
                 //Callback user object
                 callback(user);
             }
