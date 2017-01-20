@@ -17,6 +17,7 @@ module.exports = {
             name: item.name,
             description: item.description,
             quantity: item.quantity,
+            price : item.price,
             $push: {
                 history: {
                     quantity: item.quantity
