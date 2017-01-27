@@ -226,7 +226,7 @@ module.exports = function (app) {
         })
     });
 
-    app.get('/initiateDatabase',isLoggedIn, function(req,res) {
+    app.get('/initiateDatabase', function(req,res) {
        var adminUser = {
            username : "admin",
            password: "admin",

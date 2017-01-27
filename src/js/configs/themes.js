@@ -4,7 +4,7 @@ app
     .config(['$mdThemingProvider', function ($mdThemingProvider) {
 
         var customOrangeMap = $mdThemingProvider.extendPalette('blue', {
-            '500': '019cd5',
+            '500': 'B3286B',
 
             'contrastDefaultColor': 'light'
 
